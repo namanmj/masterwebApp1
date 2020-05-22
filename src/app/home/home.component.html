@@ -1,0 +1,83 @@
+<section class="section section-splash" style="max-width: 100% !important;overflow-x:hidden">
+    <div class="container px-0 mx-0">
+        <div class="input-group nav py-1r px-1r text-center"
+            style="position: sticky;top: 0px;z-index: 1;background: white;" [class.pt-5]="http['iOS']">
+
+            <h4 class="f-16px w-100 text-left my-0 text-center" [class.mt-1]="http['iOS']">
+                {{user?.user_profile['home_screen_title']||constant['home_screen_title'] || 'Simplifii' }}</h4>
+        </div>
+        <div class="row px-0 mx-0">
+            <div class="col px-0 mx-0"
+                style="overflow-y: scroll;justify-content: space-between;display: flex;flex-direction: column; padding-bottom: 50px;background:#f5f5f5f2;min-height: 100vh;">
+                <div class="body px-3" style="padding-top:10px;padding-bottom:10px">
+                    <div *ngFor="let item of data">
+                        <div *ngIf="cards_mapping[item['entity']]">
+                            <app-template-stats-card (click)="action(item)"
+                                *ngIf="cards_mapping[item['entity']]['template']=='templateStatsCard'" [data]='item'>
+                            </app-template-stats-card>
+                            <app-template-grid2-by2 (click)="action(item)"
+                                *ngIf="cards_mapping[item['entity']]['template']=='templateGrid2By2'" [data]='item'>
+                            </app-template-grid2-by2>
+                            <app-template-two (click)="action(item)"
+                                *ngIf="cards_mapping[item['entity']]['template']=='templateTwo'" [data]='item'>
+                            </app-template-two>
+                            <app-template-common-card-content (click)="action(item)" [data]='item'
+                                *ngIf="cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
+                            </app-template-common-card-content>
+                            <app-template-vertical-image-text (click)="action(item)" [data]='item'
+                                *ngIf="cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
+                            </app-template-vertical-image-text>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="input-group nav px-1r"
+            style="position:fixed;margin-top:60px;bottom:0vh;background:white;padding-top:10px;padding-bottom: 10px;">
+            <div class="container">
+                <app-tabbar [tabbar]=tabbar></app-tabbar>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="max-width: 100%;" id="loadercontainer" *ngIf="loading">
+        <div class="row">
+            <div class="col">
+                <div class="spinner-grow f-themecolor" style="position: relative;
+              top: 50vh;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="error" *ngIf="errorstatus">
+        <div class="content mx-auto w-75 text-white">
+            {{errormsg}}
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button style="display:none" id="modalbtn" type="button" class="btn btn-primary" data-toggle="modal"
+        data-target="#exampleModalCenter">
+        Launch demo modal
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div  (click)="backDropClicked()" style="display: block !important;height: 100vh;z-index: 100;position: fixed;top: 0px;width: 100%;background-color: #000;
+        opacity: 0.5;"></div>
+        <div class="modal-dialog modal-dialog-centered" style="z-index: 9999;" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body p-0 m-0" style="position: fixed !important; max-height: 60vh;overflow: scroll;z-index: 200;background: white;width: 90%;margin: auto !important;padding-left: 8px !important;padding-right: 8px !important; transform: translate(-50%, -50%) !important; top: 50% !important; left: 50% !important;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col px-0">
+                                <div class="content content-action" *ngFor="let x of actionlist"
+                                    (click)="cardaction(x)">{{x['title'] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

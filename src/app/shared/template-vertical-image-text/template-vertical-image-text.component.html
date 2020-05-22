@@ -1,0 +1,31 @@
+<div class="container" style="background: white;padding:20px;border-radius: 5px;width:100vw;margin-left: -16px;">
+  <div class="row p-0 m-0" (click)="action()">
+    <div class="col-12 p-0 m-0" style="display: flex;
+    flex-direction: column;
+    justify-content: center;">
+      <div class="text-center">
+        <img *ngIf="cards_mapping[data.entity]['fields_mapping']['content']?.iv_card_image?.key"
+          [src]="util.getvalue(data,cards_mapping[data.entity]['fields_mapping']['content']['iv_card_image']['key'])" alt=""
+          style="height:100px;width: auto !important;">
+      </div>
+      <h3  style="padding:10px 0;font-size:16px"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']"
+        [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title'])"
+        [innerHTML]="
+        (data[cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['key']]||constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['key']))"></h3>
+      <h5 *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']"
+        style="color: #00CEBD;font-size:12px"
+        [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle'])"
+        [innerHTML]="(
+        data[cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['key']] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['key']))"></h5>
+    </div>
+  </div>
+  <div class="row px-0 mx-0" (click)="action()" *ngIf="cards_mapping[data.entity]['fields_mapping']['extra_content']">
+    <div class="col mx-0 px-0">
+      <div class="extra-content " [ngStyle]="getStyle(item.value)"
+        *ngFor="let item of cards_mapping[data.entity]['fields_mapping']['extra_content'] | keyvalue"
+        [innerHTML]="(data[item.value['key']] || item.value['default_value'] || constantcheck(item.value['key']))">
+      </div>
+    </div>
+  </div>
+</div>

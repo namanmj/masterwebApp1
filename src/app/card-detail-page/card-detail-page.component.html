@@ -1,0 +1,133 @@
+<section class="section section-splash" *ngIf="!loading">
+  <div class="container px-0 mx-0">
+     <div class="row px-0 mx-0">
+        <div class="col px-0 mx-0" style="min-height: 100vh;max-height: 100vh;overflow-y: scroll;">
+           <div class=" background-themecolor text-white" style="position: sticky;top: 0px;z-index: 1;">
+              <div class="input-group nav pb-1r px-1r py-1r text-center" [class.pt-5]="http['iOS']"
+                 style="position:sticky;top:0px;z-index: 10000;">
+                 <i class="fa fa-arrow-left" style=" color: white;width: 10% !important;margin-top: 4px;cursor: pointer;"
+                    aria-hidden="true" (click)="back()"></i>
+                 <h4 class="f-20px text-white p-0 m-0 text-left" style="width:80% !important;  padding-left: 10px"
+                    [innerHTML]="( detailPage[route['card_data']['entity']]['title'] || constantcheck(detailPage[route['card_data']['entity']]['title']))">
+                 </h4>
+              </div>
+              <div *ngIf="data && detailPage[route['card_data']['entity']]['templates']['images']">
+                 <img style="padding-bottom: 5px !important;padding: 20px;width: 100%;object-fit: cover;padding-top: 5px;" [src]="(data[detailPage[route['card_data']['entity']]['templates']['images'][0]['link']]  || util.geticons(detailPage[route['card_data']['entity']]['templates']['images'][0]['link']))"
+                    alt="" srcset="">
+              </div>
+              <div style="padding-left: 1.2rem;padding-right: 1.2rem;padding-top: 10px;padding-bottom: 0px;">
+                 <div *ngIf="data">
+                    <h4 [ngStyle]="getStyle(item)"
+                    *ngFor="let item of detailPage[route['card_data']['entity']]['templates']['labels']"
+                    [innerHTML]="( data[item['rhs']] || constantcheck(item['rhs']))"></h4>
+                 </div>
+              </div>
+              <div style="padding-left: 1.2rem;padding-right: 1.2rem;padding-bottom: 15px;padding-top:2px;" class="flex">
+                 <div
+                    *ngIf="detailPage[route['card_data']['entity']]['templates']['cells']&&detailPage[route['card_data']['entity']]['templates']['cells']['field1']"
+                    class="w-50" style="display: inline-block;">
+                    <div *ngIf="detailPage[route['card_data']['entity']]['templates']['cells']['field1']['image']" style="width: 25%;display: inline-block;">
+                       <img [src]="util.geticons(detailPage[route['card_data']['entity']]['templates']['cells']['field1']['image'])" alt="" srcset="" style="    width: 100%;position: relative;top: 29%;transform: translateY(-35%);padding: 10px;padding-left: 0px;padding-right: 19px;">
+                    </div>
+                    <div style="width: 75%;display: inline-block;">
+                       <h4 style="font-size:20px"
+                          [innerHTML]="(util.getvalue(data,detailPage[route['card_data']['entity']]['templates']['cells']['field1']['rhs']) || ' ')">
+                       </h4>
+                       <h4 style="font-size:20px"
+                          *ngIf="util.getvalue(data,detailPage[route['card_data']['entity']]['templates']['cells']['field1']['rhs'])==0">
+                          0
+                       </h4>
+                       <h4 style="font-size: 15px;"
+                          [innerHTML]="(detailPage[route['card_data']['entity']]['templates']['cells']['field1']['lhs'] || constantcheck(detailPage[route['card_data']['entity']]['templates']['cells']['field1']['lhs']))">
+                       </h4>
+                    </div>
+                 </div>
+                 <div
+                    *ngIf="detailPage[route['card_data']['entity']]['templates']['cells']&&detailPage[route['card_data']['entity']]['templates']['cells']['field2']"
+                    class="w-50" style="display: inline-block;">
+                    <div style="width:25%;display: inline-block;" *ngIf="detailPage[route['card_data']['entity']]['templates']['cells']['field2']['image']">
+                       <img
+                          [src]="util.geticons(detailPage[route['card_data']['entity']]['templates']['cells']['field2']['image'])"
+                          alt="" srcset=""
+                          style="    width: 100%;position: relative;top: 29%;transform: translateY(-35%);padding: 10px;padding-left: 0px;padding-right: 19px;">
+                    </div>
+                    <div style="width: 75%;display: inline-block;">
+                       <h4 style="font-size:20px"
+                          [innerHTML]="(util.getvalue(data,detailPage[route['card_data']['entity']]['templates']['cells']['field2']['rhs']) || '')">
+                       </h4>
+                       <h4 style="font-size:20px"
+                          *ngIf="util.getvalue(data,detailPage[route['card_data']['entity']]['templates']['cells']['field2']['rhs'])==0">
+                          0
+                       </h4>
+                       <h4 style="font-size: 15px;"
+                          [innerHTML]="(detailPage[route['card_data']['entity']]['templates']['cells']['field2']['lhs'] || constantcheck(detailPage[route['card_data']['entity']]['templates']['cells']['field2']['lhs']))">
+                       </h4>
+                    </div>
+                 </div>
+              </div>
+           </div>
+           <div>
+              <div class="accordion" id="accordionExample">
+                 <div class="card" *ngFor="let item of sections;let i=index">
+                    <div class="card-header" id="headingOne">
+                       <a class="w-100" type="button" data-toggle="collapse" [href]="'#'+'collapseOne'+i" aria-expanded="true"
+                          aria-controls="collapseOne" style="background:none;border:none;background:none">
+                          <div class="text-center" style="display: inline-block;width: 10%;padding-right: 13px;">
+                             <img [src]="util.geticons(item['section_header']['icon'])" style="width:20px" alt="" srcset="">
+                          </div>
+                          <div style="display:inline-block;width:90%">
+                             <h2 class="mb-0"
+                                style="font-size: 16px;padding-top: 5px;padding-bottom: 5px;color:black;text-decoration: none;">
+                                {{item['section_header']['title']}}
+                             </h2>
+                          </div>
+                       </a>
+                    </div>
+                    <div [id]="'collapseOne'+i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                       <div class="card-body p-0">
+                          <div>
+                             <div *ngFor="let item of item['data']">
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateSectionItemHistory'">
+                                   <app-template-section-item-history [data]="item"></app-template-section-item-history>
+                                </div>
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateStatsCard'">
+                                   <app-template-stats-card [data]='item'>
+                                   </app-template-stats-card>
+                                </div>
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateCommonCardContent'">
+                                   <app-template-common-card-content [data]='item'>
+                                   </app-template-common-card-content>
+                                </div>
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateGrid2By2'">
+                                   <app-template-grid2-by2 [data]='item'>
+                                   </app-template-grid2-by2>
+                                </div>
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateTwo'">
+                                   <app-template-two [data]='item'>
+                                   </app-template-two>
+                                </div>
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateVerticalImageText'">
+                                   <app-template-vertical-image-text [data]='item'>
+                                   </app-template-vertical-image-text>
+                                </div>
+                                <div *ngIf="card_mapping[item['entity']]['template']=='templateTransaction'">
+                                   <app-template-transaction [data]='item'>
+                                   </app-template-transaction>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+  </div>
+</section>
+<div id="loadercontainer" *ngIf="loading">
+  <div class="spinner-grow f-themecolor" style="position: relative;
+     top: 50vh;" role="status">
+     <span class="sr-only">Loading...</span>
+  </div>
+</div>

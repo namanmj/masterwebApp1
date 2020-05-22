@@ -1,0 +1,8 @@
+{
+  "name": "WebApp",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

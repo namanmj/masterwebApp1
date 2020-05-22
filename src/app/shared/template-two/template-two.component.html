@@ -1,0 +1,38 @@
+<div class="container" style="background: white;
+padding: 20px;
+padding-right: 10px;margin-top: 10px;
+    padding-left: 5px;
+width: 100vw;
+margin-left: -17px;
+border-bottom: 1px solid #8080805e">
+  <div class="row p-0 m-0" (click)="action()">
+    <div class="col-3 p-0 m-0 text-center">
+      <img
+        [src]="util.geticons(util.getvalue(this.cards_mapping[this.data['entity']],'fields_mapping.body.constants.c1'))"
+        alt="" style="height:58px">
+    </div>
+    <div class="col-5 p-0 m-0" [class.col-9]="(!cards_mapping[data['entity']]['fields_mapping']['header']['h1'])&&(!cards_mapping[data['entity']]['fields_mapping']['header']['h5'])" style="display: flex;
+    flex-direction: column;
+    justify-content: center;">
+      <h3 class="f-14px" *ngIf="cards_mapping[data['entity']]['fields_mapping']['header']['h2']" [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.header.h2')] || constantcheck(cards_mapping[data['entity']]['fields_mapping']['header']['h2']))">
+      </h3>
+      <h5 class="f-12px" *ngIf="cards_mapping[data['entity']]['fields_mapping']['header']['h3']" [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.header.h3')] || constantcheck(cards_mapping[data.entity]['fields_mapping']['header']['h3']))">
+      </h5>
+      <h5 class="f-12px" *ngIf="cards_mapping[data['entity']]['fields_mapping']['header']['h4']" [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.header.h4')]|| constantcheck(cards_mapping[data.entity]['fields_mapping']['header']['h4']))">
+      </h5>
+    </div>
+    <div class="col-4 p-0 m-0" style="display: flex;
+    flex-direction: column">
+      <h3 *ngIf="cards_mapping[data['entity']]['fields_mapping']['header']['h1']" class="f-8px" style="color:#867676" [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.header.h1')] || constantcheck(cards_mapping[data.entity]['fields_mapping']['header']['h1']))">
+      </h3>
+      <h5 *ngIf="cards_mapping[data['entity']]['fields_mapping']['header']['h5']" class="f-8px" [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.header.h5')] || constantcheck(cards_mapping[data.entity]['fields_mapping']['header']['h5']))">
+      </h5>
+    </div>
+  </div>
+  <div class="row px-0 mx-0" (click)="action()" *ngIf="cards_mapping[data.entity]['fields_mapping']['extra_content']">
+    <div class="col mx-0 px-0">
+      <div class="extra-content" *ngFor="let item of cards_mapping[data.entity]['fields_mapping']['extra_content'] | keyvalue" [innerHTML]="(data[item.value['key']] || item.value['default_value'] || constantcheck(item.value['key']))">
+      </div>
+    </div>
+  </div>
+</div>

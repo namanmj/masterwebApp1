@@ -1,0 +1,46 @@
+<!-- <div class="container">
+  <div class="row px-0 mx-0">
+    <div class="col px-0 mx-0">
+      <img src="assets/img/hdfc.png" alt="" style="width:120px">
+      {{data.name}}
+    </div>
+  </div>
+</div> -->
+<!-- 
+<div class="container px-0 mx-0 py-2">
+  <div class="row px-0 mx-0">
+    <div class="col px-0 mx-0">
+      <div class="card-img">
+
+      </div>
+    
+        <h3>
+          {{data.name}}
+        </h3>
+<h5 class="" style="font-size: 0.95rem;">{{data.type}}</h5>    
+<strong  style="font-size: 1.05rem;">
+  {{data.rating}} / 5
+</strong> 
+    </div>
+  </div>
+</div> -->
+
+
+<div class="container mx-0 px-0 pr-3" style="width:319px">
+  <div class="row px-0 mx-0">
+    <div class="col mx-0 px-0"  [routerLink]="['/resdetail','12']">
+      <div class="card-img w-100 b-r-8px" style="background:grey;height:200px">
+
+      </div>
+      <!-- <img src="assets/img/dish1.png" alt="" srcset="" style="border-radius: 8px;"> -->
+      <h3 class="f-18px rubik mx pt-2">{{data.name}}</h3>
+      <h5 class="f-12px my-0 px-0 mx-0 rubik pb-2" style="color:#8A8A8F;font-family: normal;">{{data.origin}}</h5>
+    <div class="d-flex">
+      <img src="assets/img/solid.png" style="width:15px;height: 15px;" alt="">
+      <h5  class="f-15px rubik" style="font-size:13px">
+        {{data.rating}} <small style="color:#8A8A8F">({{data.reviewcount}} reviews)</small></h5>
+    </div>
+
+    </div>
+  </div>
+</div>

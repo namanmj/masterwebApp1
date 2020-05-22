@@ -1,0 +1,23 @@
+<div class="row text-center" style="    display: flex;
+flex-direction: row;
+justify-content: space-around;
+">
+  <div *ngFor="let data of tabs">
+    <img class="tabicon" [src]="util.geticons(util.getvalue(data,'image'))" alt="" srcset="" (click)="action(data)">
+
+  </div>
+  <div *ngIf="tabbar['more_options']&&tabbar['more_options'].length!=0">
+    <div class="btn-group dropup" style="height:100%">
+      <button type="button" class="btn btn-secondary dropdown-toggle p-0 m-0" style="border:none;background:none;"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img class="tabicon" [src]="util.geticons('more.png')" alt="" srcset="">
+      </button>
+      <div class="dropdown-menu">
+        <button class="tabbaraction" *ngFor="let item of tabbar['more_options']" (click)="action(item)">
+          {{item['title']}}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

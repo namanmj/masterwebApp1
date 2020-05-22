@@ -1,0 +1,51 @@
+mat-label , mat-form-field{
+  display: block;
+  margin-top:0px !important;
+  margin-bottom:0px !important;
+  }
+  .mat-radio-checked .mat-radio-container{
+    display: none;
+  }
+  .mat-radio-label-content{   
+    width: 100%;
+    white-space: normal !important;
+  }
+  
+   input[type=radio]:checked ~ label {
+    background-color: #f1592a;
+  }
+  
+  .example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+  button{
+    width: 100%;
+    border: none;
+    padding: 0.75em;
+    background: #00CEBD;
+    color: white;
+    z-index: 10000;
+  }
+  .submitBtn{
+    position:fixed;
+    bottom:0px;
+    padding:20px;
+  }
+  .button_file{
+    position: relative;
+    width: 100%;
+    border: none;
+    padding: 0.5em;
+    background: #00CEBD;
+    color: white;
+    z-index: 10000;
+  }
+  select , input, textarea{
+    padding-left: 5px !important;
+  }

@@ -1,0 +1,45 @@
+<div class="container"
+  style="background: white;padding: 20px;padding-bottom: 0px;width: 100vw;padding-left: 5px;padding-right: 5px;">
+  <div class="row p-0 m-0">
+    <div class="col-2 p-0 m-0 text-center">
+      <img src="assets/icons/dot_black.png" alt="" srcset=""
+        style="width: 8px;transform: translateY(-26px);position: relative;top: 50%;">
+    </div>
+    <div class="col-10" style="border-bottom: 1px solid #8080805e;">
+      <div class="row">
+        <div class="col-7 p-0 m-0"
+          style="display: flex;flex-direction: column;justify-content: center">
+          <h3 class="f-14px"
+            [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.content.field1.key')] || constantcheck(cards_mapping[data['entity']]['fields_mapping']['content']['field1']['key']))">
+          </h3>
+          <h5 class="f-12px"
+            [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.content.field3.key')]|| constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['field3']['key']))">
+          </h5>
+        </div>
+        <div class="col-5 p-0 m-0" style="display: flex;
+        flex-direction: column">
+          <h3 class="f-8px" style="color:#867676"
+            [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.content.field2.key')] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['field2']['key']))">
+          </h3>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 p-0 m-0">
+          <h3 class="f-12px"
+            [innerHTML]="(data[util.getvalue(cards_mapping[data['entity']],'fields_mapping.content.field4.key')] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['field4']['key']))">
+          </h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row px-0 mx-0" *ngIf="cards_mapping[data.entity]['fields_mapping']['extra_content']">
+    <div class="col mx-0 px-0">
+      <div class="extra-content"
+        *ngFor="let item of cards_mapping[data.entity]['fields_mapping']['extra_content'] | keyvalue"
+        [innerHTML]="(data[item.value['key']] || item.value['default_value'] || constantcheck(item.value['key']))">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+
+*{
+  max-width: 100vw !important;
+}
+
+input {
+  background: #F6F6F6;
+  border-radius: 8px;
+}
+
+select {
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.resend {
+  position: absolute;
+  top: 86vh;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #00CEBD;
+}
+
+.otpinput {
+  background: #F6F6F6;
+  border-radius: 100%;
+  height: 11vw;
+  width: 11vw;
+  margin: auto;
+  font-size: 2rem;
+  max-width: 50px !important; 
+  max-height: 50px;
+  border: none;
+  font-size: 15px;
+}
+
+.subtitle {
+  font-size: 14px;
+  font-family: Rubik, SANS-SERIF;
+  color: 8A8A8F;
+  color: #8A8A8F;
+}
+
+label.subtitle {
+  padding-top: 1rem
+}
+
+.mobileinput {
+  background: #F6F6F6;
+  border-radius: 8px;
+  border: none;
+  padding: 19px;
+  height: 50px;
+}
+
+button {
+  height: 46px;
+  font-family: Rubik;
+  font-size: 15px;
+  border-radius: 8px;
+}

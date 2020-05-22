@@ -1,0 +1,95 @@
+<section class="section section-genericform">
+  <div class="container px-0 mx-0">
+    <div class="row px-0 mx-0">
+      <div class="col px-0 mx-0" style="min-height: 100vh;max-height: 100vh;overflow-y: scroll;">
+        <div class="input-group nav  px-1r py-1r background-themecolor text-center" [class.pt-5]="http['iOS']"
+          style="position:sticky;top:0px;z-index: 10000;">
+          <i class="fa fa-arrow-left" style=" color: white;
+                  width: 10% !important;
+                  margin-top: 4px;" aria-hidden="true" routerLink='/home'></i>
+
+          <h4 class="f-18px text-white pb-0 m-0" style="width:80% !important">Payment</h4>
+        </div>
+        <div *ngIf="http['isUPIValid']" class="body f-15px"
+          style="padding-bottom:50px;max-width:100vw !important;overflow:scroll">
+          <div style="margin: 20px">
+            <div class="material-div">
+              <span>
+                <mat-label>Amount</mat-label>
+                <mat-form-field class="example-radio-group" appearance="outline">
+                  <input matInput type="number" placeholder="Please Enter Amount" [(ngModel)]="amount">
+                </mat-form-field>
+              </span>
+            </div>
+            <!-- <div class="material-div">
+              <span>
+                <mat-label>Message</mat-label>
+                <mat-form-field class="example-radio-group" appearance="outline">
+                  <input matInput type="text" placeholder="Message" [(ngModel)]="message">
+                </mat-form-field>
+              </span>
+            </div> -->
+            <br>
+            <div class="material-div">
+              <span>
+                <mat-label>Get payment confirmation on</mat-label>
+                <mat-form-field class="example-radio-group" appearance="outline">
+                  <input matInput type="text" placeholder="Mobile" [(ngModel)]="confirmation">
+                </mat-form-field>
+              </span>
+            </div>
+            <div id="error" *ngIf="errorstatus">
+              <div class="content mx-auto w-75 text-white" style="z-index: 100000;">
+                {{errormsg}}
+              </div>
+            </div>
+            <div style="width: 100%;text-align: center;">
+              <button (click)="proceed()">Proceed</button></div>
+          </div>
+        </div>
+        <div style="height: 95%;
+        background: #dcdcdc47;" *ngIf="!http['isUPIValid']">
+          <div class="android-content" style="     width: 80%;
+          margin: auto;
+          transform: translateY(-65%);
+          position: relative;
+          top: 50%;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+          border-radius: 20px;
+          padding: 40px;
+          background:white !important
+      ">
+            The UPI Payment Facility is supported only on our Android App.
+            <div style="text-align:center;padding-top:20px">
+              <a href="https://play.google.com/store/apps/details?id=com.simplifiilabs&hl=en">
+                <img style="background: #00cebd;
+                padding: 10px;
+                border-radius: 10px;
+                margin: auto;
+                margin-top: 10px;
+                width: 70%;
+                margin: auto;" src="assets/img/android.png" alt="" srcset="">
+              </a>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container" style="max-width: 100%;" id="loadercontainer" *ngIf="loading">
+    <div class="row">
+      <div class="col">
+        <div class="spinner-grow f-themecolor" style="position: relative;
+            top: 50vh;" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</section>

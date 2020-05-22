@@ -1,0 +1,18 @@
+<div class="container px-0 mx-0">
+  <div class="row px-0 mx-0" style="width: 100vw;
+  min-width: 100vw;margin-top: 10px;
+  margin-left: -15px !important;
+  border-bottom: 1px solid #80808059;
+  padding: 10px 5px 5px 16px !important;">
+    <div class="col px-0 mx-0">
+      <div class="row p-0 m-0" (click)="action()">
+        <div class="col-12 p-0 m-0" style="display: flex;
+        flex-direction: column;
+        justify-content: center;">
+          <h3 class="f-16px" *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']" [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['key']))"></h3>
+          <h5 class="f-12px" *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']" [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['key']]  || cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['key']))"> </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

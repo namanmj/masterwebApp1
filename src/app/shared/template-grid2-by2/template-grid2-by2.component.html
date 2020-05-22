@@ -1,0 +1,77 @@
+<div class="container" style="padding: 10px;border-bottom: 1px solid gainsboro;padding-left: 15px;padding-bottom: 10px;">
+  <div class="row p-0 m-0" (click)="action()">
+    <div class="col-12 p-0 m-0" style="display: flex;
+    flex-direction: column;
+    justify-content: center;">
+      <h3 class="f-16px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['key']] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_title']['key']))">
+      </h3>
+      <h5 [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle'])"
+        class="f-12px" *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']"
+        style="padding:2px 0px"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['key']] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_card_subtitle']['key']))">
+      </h5>
+    </div>
+  </div>
+  <div class="row p-0 m-0" (click)="action()">
+    <div class="col-6 p-0 m-0" style="display: flex;
+    flex-direction: column; 
+    justify-content: space-between;">
+      <h3 class="f-10px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_1'] )"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_1'] && cards_mapping[data.entity]['fields_mapping']['content']['tv_value_1']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_key_1']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_key_1']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_1']['key']))" style="margin-bottom: 5px;">
+      </h3>
+      <h3 class="f-14px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_1'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_1'] && cards_mapping[data.entity]['fields_mapping']['content']['tv_value_1']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_value_1']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_value_1']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_1']['key']))">
+      </h3>
+    </div>
+    <div class="col-6 p-0 m-0" style="display: flex;
+    flex-direction: column; 
+    justify-content: space-between;">
+      <h3 class="f-10px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_2'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_2'] && cards_mapping[data.entity]['fields_mapping']['content']['tv_value_2']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_key_2']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_key_2']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_2']['key']))"  style="margin-bottom: 5px;">
+      </h3>
+      <h3 class="f-14px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_2'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_2'] && cards_mapping[data.entity]['fields_mapping']['content']['tv_value_2']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_value_2']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_value_2']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_2']['key']))">
+      </h3>
+    </div>
+  </div>
+  <div class="row p-0 m-0" (click)="action()">
+    <div class="col-6 p-0 m-0" style="display: flex;
+    flex-direction: column; 
+    justify-content: space-between;">
+      <h3 class="f-10px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_3'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_3']&&cards_mapping[data.entity]['fields_mapping']['content']['tv_value_3']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_key_3']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_key_3']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_3']['key']))"   style="margin-bottom: 5px;">
+      </h3>
+      <h3 class="f-14px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_3'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_3']&&cards_mapping[data.entity]['fields_mapping']['content']['tv_value_3']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_value_3']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_value_3']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_3']['key']))">
+      </h3>
+    </div>
+    <div class="col-6 p-0 m-0" style="display: flex;
+    flex-direction: column; 
+    justify-content: space-between;">
+      <h3 class="f-10px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_4'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_4']&&cards_mapping[data.entity]['fields_mapping']['content']['tv_value_4']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_key_4']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_key_4']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_key_4']['key']))"  style="margin-bottom: 5px;">
+      </h3>
+      <h3 class="f-14px" [ngStyle]="getStyle(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_4'])"
+        *ngIf="cards_mapping[data.entity]['fields_mapping']['content']['tv_key_4']&&cards_mapping[data.entity]['fields_mapping']['content']['tv_value_4']"
+        [innerHTML]="(data[cards_mapping[data.entity]['fields_mapping']['content']['tv_value_4']['key']] || cards_mapping[data.entity]['fields_mapping']['content']['tv_value_4']['default_value'] || constantcheck(cards_mapping[data.entity]['fields_mapping']['content']['tv_value_4']['key']))">
+      </h3>
+    </div>
+  </div>
+  <div class="row px-0 mx-0" (click)="action()" *ngIf="cards_mapping[data.entity]['fields_mapping']['extra_content']">
+    <div class="col mx-0 px-0">
+      <div class="extra-content"
+        *ngFor="let item of cards_mapping[data.entity]['fields_mapping']['extra_content'] | keyvalue"
+        [innerHTML]="(data[item.value['key']] || item.value['default_value'] || constantcheck(item.value['key']))">
+      </div>
+    </div>
+  </div>
+</div>
