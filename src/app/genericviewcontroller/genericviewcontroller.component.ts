@@ -27,6 +27,11 @@ export class GenericviewcontrollerComponent implements OnInit {
   fileName: string;
   lat = ' ';
   lng = ' ';
+  str;
+  a;
+  b;
+  check=0;
+  message;
 
 
 
@@ -130,10 +135,25 @@ export class GenericviewcontrollerComponent implements OnInit {
   }
   submittheform() {
     let submit_body = {};
+    this.check=0
     this.formdata.questions.forEach(element => {
 
       if (this.dependencyResolver(element)) {
-
+        if( element.hasOwnProperty('constraints')){
+          if(element.type=="TEXTVIEW"){
+            this.str=this.formGroup.value[element.attribute_name]
+            this.a=element.constraints.min_length;
+            this.b=element.constraints.max_length;
+            if(this.str.length>=this.a && this.str.length<=this.b){
+          this.check=1
+           }
+           else{
+             this.message="length of message is not within range it should be in range of  "+this.a+" to "+this.b+"characters";
+             this.showError(this.message)
+           }
+ 
+         }
+        }
         if (element['type'] == "HIDDEN_LOCATION") {
           var tempAttri = element['attribute_name'].split(',')
           submit_body[tempAttri[0]] = this.lat
@@ -177,7 +197,7 @@ export class GenericviewcontrollerComponent implements OnInit {
       });
     }
     this.loading = true
-    if (this.formdata['endpoint_method'] == 'POST') {
+    if (this.formdata['endpoint_method'] == 'POST' && this.check==1) {
       this.http.postapi(this.http.getcompleteurl(this.formdata['submit_endpoint']), submit_body).subscribe((value) => {
         this.loading = false
         this.showError(value['msg'])
@@ -185,7 +205,7 @@ export class GenericviewcontrollerComponent implements OnInit {
       }, (error) => {
         this.showError(error['error']['msg'])
       })
-    } else if (this.formdata['endpoint_method'] == 'PATCH') {
+    } else if (this.formdata['endpoint_method'] == 'PATCH' && this.check==1) {
       this.http.patchapi(this.http.getcompleteurl(this.formdata['submit_endpoint']), submit_body).subscribe((value) => {
         this.loading = false
         this.showError(value['msg'])
@@ -193,6 +213,9 @@ export class GenericviewcontrollerComponent implements OnInit {
       }, (error) => {
         this.showError(error['error']['msg'])
       })
+    }
+    else if(this.check==0){
+      setTimeout(() => { this.navigatorstack.navigate_popup() }, 1000)
     }
   }
   dependencyResolver(question) {
