@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 import { cards_action } from '../configjson/card_action';
 import { UtilfuncService } from '../shared/utilfunc.service';
 import { detailPage } from '../configjson/detailPage';
-
-
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Downloader,NotificationVisibility,DownloadRequest } from '@ionic-native/downloader/ngx';
 @Component({
   selector: 'app-feedview',
   templateUrl: './feedview.component.html',
@@ -19,20 +19,24 @@ export class FeedviewComponent implements OnInit {
   cards_mapping = cards_mapping
   constant = constant;
   data
+  txt;
   url: any;
+  num;
   errorstatus
   route;
+  
   public loading: boolean;
   sectionsstatus: boolean;
   sectionslist: any;
   sectionmap: {};
+  file_url;
   sectionsmaplist: any[];
   feedview: {};
   actionlist: any[];
   localdata: any;
   errormsg: any;
   sectionsmaplisttitle: any[];
-  constructor(public http: HttpService, private navigatorstack: NavigatorstackService, private router: Router, public util: UtilfuncService) { }
+  constructor(public http: HttpService,private navigatorstack: NavigatorstackService,/*private downloader: Downloader,*/ private router: Router, public util: UtilfuncService, private sharing: SocialSharing) { }
   back() {
     this.navigatorstack.navigate_popup()
   }
@@ -48,6 +52,7 @@ export class FeedviewComponent implements OnInit {
   }
   showErrorAndBack(msg) {
     this.errorstatus = true
+    
     this.loading = false
     this.errormsg = msg
     setTimeout(() => {
@@ -146,6 +151,7 @@ export class FeedviewComponent implements OnInit {
   actioncontroler(data, x) {
 
     var segue = data
+    console.log(segue)
     var route = ''
     var endpoint = ''
     if (data['view_identifier'] == 'CardDetailViewController') {
@@ -168,10 +174,11 @@ export class FeedviewComponent implements OnInit {
       document.location.href = ('tel://' + this.localdata[segue['special_action_input']])
       return
     } else if (segue['special_action'] && segue['special_action'] == 'SHARE') {
-      this.showError('Share functionality not available.')
+      this.share()
+    
       return
     } else if (segue['special_action'] && segue['special_action'] == 'DOWNLOAD') {
-      this.showError('Download functionality not available.')
+      //this.download(data['file_url'])
       return
     }
     var temp = []
@@ -191,6 +198,38 @@ export class FeedviewComponent implements OnInit {
       }
     )
     // }
+  }
+  /*download(file_url){
+    var request: DownloadRequest = {
+      uri: file_url,
+      title: 'MyDownload',
+      description: '',
+      mimeType: '',
+      visibleInDownloadsUi: true,
+      notificationVisibility: NotificationVisibility.VisibleNotifyCompleted,
+      destinationInExternalFilesDir: {
+          dirType: 'Downloads',
+          subPath: 'MyFile.pdf'
+      }
+  };
+
+
+this.downloader.download(request)
+          .then((location: string) => console.log('File downloaded at:'+location))
+          .catch((error: any) => console.error(error));
+  }*/
+  share()
+  {this.txt="hello"
+  this.num="8707037152"
+    this.sharing.shareViaSMS(this.txt,this.num).then(() => {
+      // Sharing via email is possible
+      console.log("Sharing via email is possible")
+    }).catch(() => {
+      // Sharing via email is not possible
+      console.log("Sharing via email is not possible")
+    });
+    
+    
   }
   ngOnInit() {
     this.errorstatus = false

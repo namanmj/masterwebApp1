@@ -7,8 +7,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebIntent } from '@ionic-native/web-intent/ngx';
-
-
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Downloader } from '@ionic-native/downloader/ngx';
 
 
 
@@ -92,6 +92,8 @@ import { TemplateSectionItemHistoryComponent } from './shared/template-section-i
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
+    Downloader,
     WebIntent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

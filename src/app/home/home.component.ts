@@ -146,6 +146,7 @@ export class HomeComponent implements OnInit {
   }
   actioncontroler(data, x) {
     var segue = data
+    
     var route = ''
     var endpoint = ''
     if (segue['view_identifier'] == 'WebViewController') {
@@ -200,6 +201,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.errorstatus = false
     this.user = JSON.parse(localStorage.getItem('user'))
+    
     if (localStorage.getItem('constants')) { } else { this.router.navigateByUrl('/login') }
     this.loading = true
     this.http.getapi(constant['base_url'] + this.util.getvalue(constant, 'api.cards.get')).subscribe((value) => {
