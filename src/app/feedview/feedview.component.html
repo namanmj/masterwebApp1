@@ -1,92 +1,117 @@
-<section class="section section-splash">
-  <div class="container px-0 mx-0">
-    <div *ngIf="data&&data.length!=0" class="row px-0 mx-0">
-      <div class="col px-0 mx-0" style="min-height: 100vh;max-height: 100vh;overflow-y: scroll;">
-        <div class="input-group nav pb-1r px-1r py-1r background-themecolor text-center" [class.pt-5]="http['iOS']"
-          style="position:sticky;top:0px;z-index: 10000;">
-          <i class="fa fa-arrow-left" style=" color: white;width: 10% !important;margin-top: 4px;cursor: pointer;" aria-hidden="true"
-            (click)="back()"></i>
-          <h4 class="f-18px text-white p-0 m-0" style="width:80% !important;    padding-top: 2px !important">
-            {{feedview[route['generic_view_id']]?.title || route['generic_view_id'] || route['title'] ||' '}}</h4>
-        </div>
-        <div class="body" style="background:#f2f2f273;padding-top:0px;padding-bottom:10px;height: 92vh;overflow:scroll"
-          *ngIf="(!sectionsstatus)">
-          <div *ngFor="let item of data">
-            <div class="px-3" *ngIf="cards_mapping[item['entity']]['template']=='templateStatsCard'">
-              <app-template-stats-card (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'>
-              </app-template-stats-card>
-            </div>
-            <div *ngIf="cards_mapping[item['entity']]['template']=='templateGrid2By2'">
-              <app-template-grid2-by2 (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'>
-              </app-template-grid2-by2>
-            </div>
-            <div class="px-3" *ngIf="cards_mapping[item['entity']]['template']=='templateTwo'">
-              <app-template-two (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'>
-              </app-template-two>
-            </div>
-            <div class="px-3" *ngIf="cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
-              <app-template-common-card-content (click)="action(item)" [attr.data-section]="getattribute(item)"
-                [data]='item'></app-template-common-card-content>
-            </div>
-            <div class="px-3" *ngIf="cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
-              <app-template-vertical-image-text (click)="action(item)" [attr.data-section]="getattribute(item)"
-                [data]='item'></app-template-vertical-image-text>
+<div *ngIf="!filterToggle">
+  <section class="section section-splash">
+    <div class="container px-0 mx-0">
+      <div *ngIf="data&&data.length!=0" class="row px-0 mx-0">
+        <div class="col px-0 mx-0" style="min-height: 100vh;max-height: 100vh;overflow-y: scroll;">
+          <div class="input-group nav pb-1r px-1r py-1r background-themecolor text-center" [class.pt-5]="http['iOS']"
+            style="position:sticky;top:0px;z-index: 10000;">
+            <i class="fa fa-arrow-left" style=" color: white;width: 10% !important;margin-top: 4px;cursor: pointer;"
+              aria-hidden="true" (click)="back()"></i>
+            <h4 class="f-18px text-white p-0 m-0" style="width:80% !important;    padding-top: 2px !important">
+              {{feedview[route['generic_view_id']]?.title || route['generic_view_id'] || route['title'] ||' '}}</h4>
+              <img (click)="filters()" *ngIf="isFilter&&route['filter']" style="width:28px" src="assets/icons/filter_applied.png" alt=""
+              srcset="">  
+               <img (click)="filters()" *ngIf="isFilter&&!route['filter']" style="width:28px" src="assets/icons/filter_unapplied.png" alt=""
+              srcset="">
+          </div>
+          <div class="body"
+            style="background:#f2f2f273;padding-top:0px;padding-bottom:10px;height: 92vh;overflow:scroll"
+            *ngIf="(!sectionsstatus)">
+            <div *ngFor="let item of data">
+              <div class="px-3"
+                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateStatsCard'">
+                <app-template-stats-card (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'>
+                </app-template-stats-card>
+              </div>
+              <div *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateGrid2By2'">
+                <app-template-grid2-by2 (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'>
+                </app-template-grid2-by2>
+              </div>
+              <div class="px-3"
+                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTwo'">
+                <app-template-two (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'>
+                </app-template-two>
+              </div>
+              <div class="px-3"
+                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
+                <app-template-common-card-content (click)="action(item)" [attr.data-section]="getattribute(item)"
+                  [data]='item'></app-template-common-card-content>
+              </div>
+              <div class="px-3"
+                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
+                <app-template-vertical-image-text (click)="action(item)" [attr.data-section]="getattribute(item)"
+                  [data]='item'></app-template-vertical-image-text>
+              </div>
+              <div class="px-3" 
+              *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTransaction'">
+                <app-template-transaction (click)="action(item)" [attr.data-section]="getattribute(item)" [data]='item'
+                  *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTransaction'">
+                </app-template-transaction>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="body px-3" style="padding-top:0px;padding-bottom:10px;height: 92vh;overflow:scroll"
-          *ngIf="sectionsstatus">
-          <div class="panel-group" id="accordion" style="    width: 100vw;
-                margin-left: -16px">
-            <div class="panel panel-default" *ngFor="let key of sectionsmaplist; let i = index">
-              <div class="panel-heading d-flex" *ngIf="sectionmap[key].length!=0">
-                <a data-toggle="collapse" data-parent="#accordion" [href]="'#'+'section-'+i" class="panel-title m-0 p-0"
-                  style="padding: 10px !important;padding-top: 15px !important;    padding-left: 31px !important;display:inline-block;font-size: 18px;color: black;width:100%;background: #00000007;
-                  ">
-                  <h4 *ngIf="sectionsmaplisttitle"
-                    style="color:black;display:inline-block;max-width: 90% !important;font-size: 16px !important;">
-                    {{ sectionsmaplisttitle[i]}} ({{sectionmap[key].length}})</h4>
-                  <h4 *ngIf="!sectionsmaplisttitle"
-                    style="color:black;display:inline-block;max-width: 90% !important;font-size: 16px !important;">
-                    {{key}} ({{sectionmap[key].length}})</h4>
-                  <img src="assets/newimg/menu.png" alt="" style="float: right;height: 20px;margin-top:7px;">
-                </a>
-                <!-- <i style="display:inline-block" class="fas fa-ellipsis-v-alt"></i> -->
-              </div>
-              <div [id]="'section-'+i" class="panel-collapse collapse in" data-parent="#accordion">
-                <div class="panel-body">
-                  <div *ngFor="let item of sectionmap[key]">
-                    <div class="px-3">
-                      <app-template-stats-card (click)="action(item)" [attr.data-section]="getattribute(item)"
-                        *ngIf="cards_mapping[item['entity']]['template']=='templateStatsCard'" [data]='item'>
-                      </app-template-stats-card>
-                    </div>
-                    <div>
-                      <app-template-grid2-by2 (click)="action(item)" [attr.data-section]="getattribute(item)"
-                        *ngIf="cards_mapping[item['entity']]['template']=='templateGrid2By2'" [data]='item'>
-                      </app-template-grid2-by2>
-                    </div>
-                    <div class="px-3">
-                      <app-template-two (click)="action(item)" [attr.data-section]="getattribute(item)"
-                        *ngIf="cards_mapping[item['entity']]['template']=='templateTwo'" [data]='item'>
-                      </app-template-two>
-                    </div>
-                    <div class="px-3">
-                      <app-template-common-card-content (click)="action(item)" [attr.data-section]="getattribute(item)"
-                        [data]='item' *ngIf="cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
+          <div class="body px-3" style="padding-top:0px;padding-bottom:10px;height: 92vh;overflow:scroll"
+            *ngIf="sectionsstatus">
+            <div class="panel-group" id="accordion" style="    width: 100vw;
+                  margin-left: -16px">
+              <div class="panel panel-default" *ngFor="let key of sectionsmaplist; let i = index">
+                <div class="panel-heading d-flex" *ngIf="sectionmap[key].length!=0">
+                  <a id="panelId" data-toggle="collapse" data-parent="#accordion" [href]="'#'+'section-'+i"
+                    class="panel-title m-0 p-0">
+                    <h4 *ngIf="sectionsmaplisttitle"
+                      style="color:black;display:inline-block;max-width: 90% !important;font-size: 16px !important;">
+                      {{ sectionsmaplisttitle[i]}} ({{sectionmap[key].length}})</h4>
+                    <h4 *ngIf="!sectionsmaplisttitle"
+                      style="color:black;display:inline-block;max-width: 90% !important;font-size: 16px !important;">
+                      {{key}} ({{sectionmap[key].length}})</h4>
+                    <img src="assets/newimg/menu.png" alt="" style="float: right;height: 20px;margin-top:7px;">
+                  </a>
+                  <!-- <i style="display:inline-block" class="fas fa-ellipsis-v-alt"></i> -->
+                </div>
+                <div [id]="'section-'+i" class="panel-collapse collapse in" data-parent="#accordion">
+                  <div class="panel-body">
+                    <div *ngFor="let item of sectionmap[key]">
+                      <div class="px-3" *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateStatsCard'">
+                        <app-template-stats-card (click)="action(item)" [attr.data-section]="getattribute(item)"
+                          *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateStatsCard'"
+                          [data]='item'>
+                        </app-template-stats-card>
+                      </div>
+                      <div  *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateGrid2By2'">
+                        <app-template-grid2-by2 (click)="action(item)" [attr.data-section]="getattribute(item)"
+                          *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateGrid2By2'"
+                          [data]='item'>
+                        </app-template-grid2-by2>
+                      </div>
+                      <div class="px-3"  *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTwo'">
+                        <app-template-two (click)="action(item)" [attr.data-section]="getattribute(item)"
+                          *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTwo'"
+                          [data]='item'>
+                        </app-template-two>
+                      </div>
+                      <div class="px-3" 
+                      *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
+                        <app-template-common-card-content (click)="action(item)"
+                          [attr.data-section]="getattribute(item)" [data]='item'
+                          *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
 
-                      </app-template-common-card-content>
-                    </div>
-                    <div class="px-3">
-                      <app-template-vertical-image-text (click)="action(item)" [attr.data-section]="getattribute(item)"
-                        [data]='item' *ngIf="cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
+                        </app-template-common-card-content>
+                      </div>
+                      <div class="px-3" 
+                      *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
+                        <app-template-vertical-image-text (click)="action(item)"
+                          [attr.data-section]="getattribute(item)" [data]='item'
+                          *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
 
-                      </app-template-vertical-image-text>
-                    </div>
-                    <div class="px-3">
-                      <app-template-transaction (click)="action(item)" [attr.data-section]="getattribute(item)"
-                        [data]='item' *ngIf="cards_mapping[item['entity']]['template']=='templateTransaction'">
-                      </app-template-transaction>
+                        </app-template-vertical-image-text>
+                      </div>
+                      <div class="px-3" 
+                      *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTransaction'">
+                        <app-template-transaction (click)="action(item)" [attr.data-section]="getattribute(item)"
+                          [data]='item'
+                          *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTransaction'">
+                        </app-template-transaction>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -95,58 +120,63 @@
           </div>
         </div>
       </div>
-    </div>
-    <div *ngIf="data&&data.length==0" class="row px-0 mx-0">
-      <div class="col mx-0 px-0">
-        <div class="input-group nav pb-1r px-1r py-1r background-themecolor text-center"
-          style="position:sticky;top:0px;z-index: 10000" [class.pt-5]="http['iOS']">
-          <i class="fa fa-arrow-left" style=" color: white;width: 10% !important;margin-top: 4px;cursor: pointer;" aria-hidden="true"
-            (click)="back()"></i>
+      <div *ngIf="data&&data.length==0" class="row px-0 mx-0">
+        <div class="col mx-0 px-0">
+          <div class="input-group nav pb-1r px-1r py-1r background-themecolor text-center"
+            style="position:sticky;top:0px;z-index: 10000" [class.pt-5]="http['iOS']">
+            <i class="fa fa-arrow-left" style=" color: white;width: 10% !important;margin-top: 4px;cursor: pointer;"
+            aria-hidden="true" (click)="back()"></i>
           <h4 class="f-18px text-white p-0 m-0" style="width:80% !important;    padding-top: 2px !important">
             {{feedview[route['generic_view_id']]?.title || route['generic_view_id'] || route['title'] ||' '}}</h4>
-        </div>
-        <div class="no-data" style="    color: rgb(36, 149, 194);
-        font-size: 22px;
-        text-align: center;
-    transform: translateY(-50%);
-    top: 50vh;
-    position: relative;">
-          No Transactions Found
-          <!-- <img src="assets/img/nodata.png"
-            style="width: 100vw;position: absolute;top: 50vh;transform: translateY(-30vh);" alt="" srcset=""> -->
+            <img (click)="filters()" *ngIf="isFilter&&route['filter']" style="width:28px" src="assets/icons/filter_applied.png" alt=""
+            srcset="">  
+             <img (click)="filters()" *ngIf="isFilter&&!route['filter']" style="width:28px" src="assets/icons/filter_unapplied.png" alt=""
+            srcset="">
+          </div>
+          <div class="no-data" style="    color: rgb(36, 149, 194);
+          font-size: 22px;
+          text-align: center;
+      transform: translateY(-50%);
+      top: 50vh;
+      position: relative;">
+            No Transactions Found
+            <!-- <img src="assets/img/nodata.png"
+              style="width: 100vw;position: absolute;top: 50vh;transform: translateY(-30vh);" alt="" srcset=""> -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div id="loadercontainer" *ngIf="loading">
-    <div class="spinner-grow f-themecolor" style="position: relative;
-    top: 50vh;" role="status">
-      <span class="sr-only">Loading...</span>
+    <div id="loadercontainer" *ngIf="loading">
+      <div class="spinner-grow f-themecolor" style="position: relative;
+      top: 50vh;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
-  </div>
-  <div id="error" *ngIf="errorstatus">
-    <div class="content mx-auto w-75 text-white">
-      {{errormsg}}
+    <div id="error" *ngIf="errorstatus">
+      <div class="content mx-auto w-75 text-white">
+        {{errormsg}}
+      </div>
     </div>
-  </div>
-  <button style="display:none" id="modalbtn" type="button" class="btn btn-primary" data-toggle="modal"
-    data-target="#exampleModalCenter">
-    Launch demo modal
-  </button>
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div (click)="backDropClicked()" style="display: block !important;height: 100vh;z-index: 100;position: fixed;top: 0px;width: 100%;background-color: #000;
-    opacity: 0.5;"></div>
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
+    <button style="display:none" id="modalbtn" type="button" class="btn btn-primary" data-toggle="modal"
+      data-target="#exampleModalCenter">
+      Launch demo modal
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div (click)="backDropClicked()" style="display: block !important;height: 100vh;z-index: 100;position: fixed;top: 0px;width: 100%;background-color: #000;
+      opacity: 0.5;"></div>
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
-        <div class="modal-body p-0 m-0"
-          style="position: fixed !important; max-height: 60vh;overflow: scroll;z-index: 200;background: white;width: 90%;margin: auto !important;padding-left: 8px !important;padding-right: 8px !important; transform: translate(-50%, -50%) !important; top: 50% !important; left: 50% !important;">
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="content content-action" *ngFor="let x of actionlist" (click)="cardaction(x)">{{x['title'] }}
+          <div class="modal-body p-0 m-0"
+            style="position: fixed !important; max-height: 60vh;overflow: scroll;z-index: 200;background: white;width: 90%;margin: auto !important;padding-left: 8px !important;padding-right: 8px !important; transform: translate(-50%, -50%) !important; top: 50% !important; left: 50% !important;">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="content content-action" *ngFor="let x of actionlist" (click)="cardaction(x)">
+                    {{x['title'] }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,5 +184,119 @@
         </div>
       </div>
     </div>
+  </section>
+  <div id="floater-action"  style="display:none;position:fixed;bottom:30px;left: 40px;">
+    <div id="container-floating">
+
+      <div [class]="'nd'+(i+1)+' nds'" (click)="floatercardaction(action)"
+        *ngFor="let action of floaterActionList;let i=index" data-toggle="tooltip" data-placement="left"
+        data-original-title="Simone">{{action['title']}}</div>
+
+      <div id="floating-button" data-toggle="tooltip" data-placement="left">
+        <p class="plus">+</p>
+        <img class="edit" src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png">
+      </div>
+
+    </div>
+
   </div>
-</section>
+
+</div>
+<div *ngIf="filterToggle" class="container p-0 m-0" id="filters" style="position: fixed;bottom: 0px;z-index: 100;background: white;top: 0px;overflow: scroll">
+  <div class="row p-0 m-0">
+    <div class="col  p-0 m-0">
+      <div class="input-group nav pb-1r px-1r py-1r background-themecolor text-center" [class.pt-5]="http['iOS']"
+        style="position:sticky;top:0px;z-index: 10000;">
+        <h4 class="f-18px text-white p-0 m-0" style="width:20% !important;padding-top: 2px !important;cursor:pointer" (click)="toggleFilter()">
+          Close</h4>
+        <h4 class="f-18px text-white p-0 m-0" style="width:60% !important;padding-top: 2px !important">
+          Filter</h4>
+        <h4 class="f-18px text-white p-0 m-0" style="width:20% !important;padding-top: 2px !important;cursor:pointer" (click)="applyFilter()">
+          Apply</h4>
+      </div>
+      <div class="body f-15px" style="padding-bottom: 50px;max-width: 100vw !important;overflow: scroll;padding-left: 16px;padding-right: 16px;padding-top: 16px;">
+        <div *ngFor="let question of filter.questions;let i=index">
+          <div *ngIf=" question.type==='RADIO'">
+            <span *ngIf="question.type==='RADIO'">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-radio-group class="example-radio-group" [(ngModel)]="filterObj[question.attribute_name]">
+                <span *ngIf="question.possible_values">
+                  <mat-radio-button class="example-radio-button" *ngFor="let option of question.options"
+                    [value]="option[question.attribute_rhs]">{{option[question.possible_values[0]]}}
+                  </mat-radio-button>
+                </span>
+                <mat-radio-button #radiooptions class="example-radio-button" *ngFor="let option of question.options"
+                  [value]="option[question.attribute_rhs]">{{option['title']}}</mat-radio-button>
+              </mat-radio-group>
+            </span>
+          </div>
+          <div *ngIf=" question.type==='NUMBER'">
+            <span *ngIf="question.type==='NUMBER'">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-form-field class="example-radio-group" appearance="outline">
+                <input matInput type="number" [(ngModel)]="filterObj[question.attribute_name]" [placeholder]="question.placeholder_text">
+                <mat-error>{{question.title}} is required</mat-error>
+              </mat-form-field>
+            </span>
+          </div>
+          <div *ngIf=" question.type==='TEXT'">
+            <span *ngIf="question.type==='TEXT'">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-form-field class="example-radio-group" appearance="outline">
+                <input matInput type="text" [(ngModel)]="filterObj[question.attribute_name]" [placeholder]="question.placeholder_text">
+                <mat-error>{{question.title}} is required</mat-error>
+              </mat-form-field>
+            </span>
+          </div>
+          <div *ngIf=" question.type==='TEXTVIEW'">
+            <span *ngIf="question.type==='TEXTVIEW'">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-form-field class="example-radio-group" appearance="outline" style="margin-top: 5px !important;">
+                <textarea matInput type="text" style="height:100%" [(ngModel)]="filterObj[question.attribute_name]" [placeholder]="question.placeholder_text"></textarea>
+                <mat-error>{{question.title}} is required</mat-error>
+              </mat-form-field>
+            </span>
+          </div>
+          <div *ngIf=" question.type==='CONCATENATEDYNAMICTAGS' && (question.max_items==='1' || !question.max_items)">
+            <span *ngIf="question.type==='CONCATENATEDYNAMICTAGS'&& (question.max_items==='1' || !question.max_items)">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-form-field class="example-radio-group" appearance="outline">
+                <mat-select [placeholder]="question.placeholder_text" [(ngModel)]="filterObj[question.attribute_name]">
+                  <mat-option  [value]="">All</mat-option>
+                  <mat-option *ngFor="let option of question.options" [value]="option[question.attribute_rhs]">
+                    {{option[question.possible_values[0]]}}</mat-option>
+                </mat-select>
+                <mat-error>{{question.title}} is required</mat-error>
+              </mat-form-field>
+            </span>
+          </div>
+          <div
+            *ngIf=" question.type==='CONCATENATEDYNAMICTAGS'&& question.max_items &&(question.max_items==='many' || question.max_items!='1')">
+            <span
+              *ngIf="question.type==='CONCATENATEDYNAMICTAGS'&&(question.max_items==='many' || question.max_items!='1')">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-form-field class="example-radio-group" appearance="outline">
+                <mat-select multiple [placeholder]="question.placeholder_text" [(ngModel)]="filterObj[question.attribute_name]">
+                  <mat-option *ngFor="let option of question.options" [value]="option[question.attribute_rhs]">
+                    {{option[question.possible_values[0]]}}</mat-option>
+                </mat-select>
+                <mat-error>{{question.title}} is required</mat-error>
+              </mat-form-field>
+            </span>
+          </div>
+          <div *ngIf=" question.type==='DATE'">
+            <span *ngIf="question.type==='DATE'">
+              <mat-label>{{question.title}}</mat-label>
+              <mat-form-field class="example-radio-group" appearance="outline">
+                <input [placeholder]="question.placeholder_text" matInput [matDatepicker]="i" [(ngModel)]="filterObj[question.attribute_name]">
+                <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
+                <mat-datepicker #i></mat-datepicker>
+                <mat-error>{{question.title}} is required</mat-error>
+              </mat-form-field>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

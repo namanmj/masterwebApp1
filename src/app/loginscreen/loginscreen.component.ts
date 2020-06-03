@@ -11,6 +11,7 @@ import { UtilfuncService } from '../shared/utilfunc.service';
 import { MasterJson } from '../configjson/masterJson';
 import { CardAction } from '../configjson/card_action';
 import { DetailPage } from '../configjson/detailPage';
+import { Filter } from '../configjson/filter';
 @Component({
   selector: 'app-loginscreen',
   templateUrl: './loginscreen.component.html',
@@ -30,9 +31,11 @@ export class LoginscreenComponent implements OnInit {
   errormsg: any;
   counters = 10;
   isbaseUrl = false;
+  usernameString=''
   constructor(public http: HttpService, private router: Router, private utilfunc: UtilfuncService) { }
   signup() { }
   ngOnInit() {
+    localStorage.clear()
     this.isbaseUrl = false
     var baseurl = window.location
     if (baseurl.href.includes('base_url')) { this.isbaseUrl = true }
@@ -45,6 +48,11 @@ export class LoginscreenComponent implements OnInit {
     this.otpscreen = false
     this.loginscreen = true
     this.signupscreen = false
+
+    if(this.http.isJayceeconnect){
+      this.usernameString='SAP Code'
+    }else{this.usernameString='User ID'}
+
   }
   getdivisor(number) {
     return ~~(number / 60)
@@ -157,16 +165,7 @@ export class LoginscreenComponent implements OnInit {
     let obj = {
       "username": this.username,
       "password": this.password,
-      "device_version": "9",
-      "os": "ANDROID",
-      "app_version": "5.4",
-      "device_id": "262b2ef2a033fe3f",
-      "device_model": "Redmi Note 7 Pro",
-      "device_brand": "xiaomi",
-      "device_token": "d3wOMzYFyic:APA91bHdaKLOi82FAOrh_IEEvmH-uIjamp94wP4nL1N9_czlKIj8i2r4EDi6JIgnEIuG9BcYpUrWVRO_Jm8kPSghpgVeK84s9wuQ3UbUwdonNg2LG1muAs-4g8pczqZ1svHeIaPl6XHh",
-      "app_id": "com.simplifii",
-      "device_manufacturer": "Xiaomi"
-
+      "os": "ANDROID"
     }
     this.loading = true
     this.http.varifyotp(obj).subscribe((value) => {
@@ -174,6 +173,10 @@ export class LoginscreenComponent implements OnInit {
       var a = new Date()
       Tabbar.setup(value['response']['jsons']['tabbar.json']['tabbar'])
       localStorage.setItem('tabbar', JSON.stringify(value['response']['jsons']['tabbar.json']['tabbar']))
+
+      Filter.setup(value['response']['jsons']['filters.json'])
+      localStorage.setItem('filter', JSON.stringify(value['response']['jsons']['filters.json']))
+
       FeedView.setup(value['response']['jsons']['feedview.json'])
       localStorage.setItem('feedview', JSON.stringify(value['response']['jsons']['feedview.json']))
       CardMapping.setup(value['response']['jsons']['cards_mapping.json'])

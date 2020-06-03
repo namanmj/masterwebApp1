@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigatorstackService } from '../navigatorstack.service';
 import { masterJson } from '../configjson/masterJson';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../http.service';
 import { UtilfuncService } from '../shared/utilfunc.service';
 
@@ -27,11 +27,7 @@ export class GenericviewcontrollerComponent implements OnInit {
   fileName: string;
   lat = ' ';
   lng = ' ';
-  str;
-  a;
-  b;
-  check=0;
-  message;
+  cardData;
 
 
 
@@ -39,15 +35,65 @@ export class GenericviewcontrollerComponent implements OnInit {
     this.userData = JSON.parse(localStorage.getItem('user'));
   }
 
-  ngOnInit() {
+  checkValid() {
+    let isError = false;
+    this.formdata.questions.forEach(element => {
 
+      if (this.dependencyResolver(element)) {
+        if (element.is_mandatory && element.is_mandatory === 1) {
+          if (!this.formGroup.value[element.attribute_name]) {
+            this.showError(element.title + ' is required');
+            isError = true;
+            return false;
+          }
+        }
+      }
+    })
+    if (isError) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  returnDefaultvalue(question) {
+    if (question.field_value_type) {
+      if (question.field_value_type === 'card') {
+        return this.util.getvalue(this.cardData, question.field_value, '');
+      }
+      if (question.field_value_type === 'user') {
+        return this.util.getvalue(this.userData, question.field_value, '');
+      }
+    } else {
+      return '';
+    }
+  }
+
+  ngOnInit() {
+    console.log(this.userData);
     this.formGroup = this.fb.group({});
     this.masterJson = masterJson;
+
     this.data = this.navigatorstack.returntop();
+    console.log(this.data.card_data);
+    this.cardData = this.data.card_data;
     const generic_view_id = this.data.generic_view_id || this.data.card_data['generic_view_id'];
     // this variable contains the card parameters user parameters constants
     if (this.masterJson[generic_view_id]) { } else { this.router.navigateByUrl('/home'); }
     this.formdata = this.masterJson[generic_view_id] || '';
+    console.log(this.formdata['card_parameters'])
+    if (!this.formdata['card_parameters']) {
+      console.log(this.data['card_parameters'])
+      if (this.data['card_parameters']) {
+        this.formdata['card_parameters'] = [...this.data['card_parameters']]
+
+      }
+    } else {
+      if (this.data['card_parameters']) {
+
+        this.formdata['card_parameters'] = [...this.data['card_parameters'], ...this.formdata['card_parameters']]
+      }
+    }
     if (this.formdata.pages) {
       var sectionquestion = []
       this.formdata.pages.forEach(page => {
@@ -60,13 +106,18 @@ export class GenericviewcontrollerComponent implements OnInit {
     if (this.formdata) {
       this.formdata.questions.forEach(element => {
         if (element['type'] == "HIDDEN_LOCATION") {
-          try{
-            if(window.navigator['permissions']){
-            window.navigator['permissions'].query({ name: 'geolocation' }).then((result) => { this.location(result, element['is_mandatory']) });}
-          }catch{}
-       
+          try {
+            if (window.navigator['permissions']) {
+              window.navigator['permissions'].query({ name: 'geolocation' }).then((result) => { this.location(result, element['is_mandatory']) });
+            }
+          } catch{ }
+
         }
-        this.formGroup.addControl(element.attribute_name, this.fb.control(''));
+        if (element.is_mandatory && element.is_mandatory === 1 && this.dependencyResolver(element)) {
+          this.formGroup.addControl(element.attribute_name, this.fb.control(this.returnDefaultvalue(element), Validators.required));
+        } else {
+          this.formGroup.addControl(element.attribute_name, this.fb.control(this.returnDefaultvalue(element)));
+        }
 
       });
     }
@@ -76,7 +127,7 @@ export class GenericviewcontrollerComponent implements OnInit {
   location(result, required) {
     // Will return ['granted', 'prompt', 'denied']
     console.log(result.state);
-    if(result.state=='prompt'){
+    if (result.state == 'prompt') {
       this.showError('Please provide location permission and try again')
       setTimeout(() => { this.back() }, 1500)
     }
@@ -93,7 +144,17 @@ export class GenericviewcontrollerComponent implements OnInit {
     this.navigatorstack.navigate_popup();
   }
   submit() {
-    this.submittheform()
+    console.log(this.formGroup);
+    console.log(this.formGroup.valid);
+    if (this.formGroup.valid) {
+      console.log('submitted')
+      // console.log(this.checkValid())
+      if (this.checkValid()) {
+        this.submittheform()
+      }
+    } else {
+      this.formGroup.markAllAsTouched();
+    }
   }
 
   getTitle(x) {
@@ -135,25 +196,10 @@ export class GenericviewcontrollerComponent implements OnInit {
   }
   submittheform() {
     let submit_body = {};
-    this.check=0
     this.formdata.questions.forEach(element => {
 
       if (this.dependencyResolver(element)) {
-        if( element.hasOwnProperty('constraints')){
-          if(element.type=="TEXTVIEW"){
-            this.str=this.formGroup.value[element.attribute_name]
-            this.a=element.constraints.min_length;
-            this.b=element.constraints.max_length;
-            if(this.str.length>=this.a && this.str.length<=this.b){
-          this.check=1
-           }
-           else{
-             this.message="length of message is not within range it should be in range of  "+this.a+" to "+this.b+"characters";
-             this.showError(this.message)
-           }
- 
-         }
-        }
+
         if (element['type'] == "HIDDEN_LOCATION") {
           var tempAttri = element['attribute_name'].split(',')
           submit_body[tempAttri[0]] = this.lat
@@ -197,7 +243,7 @@ export class GenericviewcontrollerComponent implements OnInit {
       });
     }
     this.loading = true
-    if (this.formdata['endpoint_method'] == 'POST' && this.check==1) {
+    if (this.formdata['endpoint_method'] == 'POST') {
       this.http.postapi(this.http.getcompleteurl(this.formdata['submit_endpoint']), submit_body).subscribe((value) => {
         this.loading = false
         this.showError(value['msg'])
@@ -205,7 +251,7 @@ export class GenericviewcontrollerComponent implements OnInit {
       }, (error) => {
         this.showError(error['error']['msg'])
       })
-    } else if (this.formdata['endpoint_method'] == 'PATCH' && this.check==1) {
+    } else if (this.formdata['endpoint_method'] == 'PATCH') {
       this.http.patchapi(this.http.getcompleteurl(this.formdata['submit_endpoint']), submit_body).subscribe((value) => {
         this.loading = false
         this.showError(value['msg'])
@@ -213,9 +259,6 @@ export class GenericviewcontrollerComponent implements OnInit {
       }, (error) => {
         this.showError(error['error']['msg'])
       })
-    }
-    else if(this.check==0){
-      setTimeout(() => { this.navigatorstack.navigate_popup() }, 1000)
     }
   }
   dependencyResolver(question) {
@@ -268,7 +311,7 @@ export class GenericviewcontrollerComponent implements OnInit {
       }
       if (this.formdata.questions[index]['params'] && this.formdata.questions[index]['params']['card'] && this.formdata.questions[index]['params']['card'].length != 0) {
         var card = this.data['card_data']
-        this.formdata.questions[index]['params']['user'].forEach(obj => {
+        this.formdata.questions[index]['params']['card'].forEach(obj => {
           if (card[obj['rhs']]) {
             optionUrl = optionUrl + `&${obj.lhs}=${card[obj['rhs']]}`
           }

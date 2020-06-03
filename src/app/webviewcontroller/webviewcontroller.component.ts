@@ -42,14 +42,19 @@ export class WebviewComponent implements OnInit {
     this.url=tempUrl.join('')
 
     }
-    if(this.url.indexOf('map')>=0 && this.url.indexOf('google')>=0){
+    if(this.url.indexOf('map.')>=0 && this.url.indexOf('google')>=0){
       this.url=this.url+'&output=embed'
     }
     if (route['card_data'][route['url']]) { this.url = route['card_data'][route['url']] }
     if (!this.url) { return this.router.navigateByUrl('/home') }
-    if (this.url.indexOf('http') >= 0) { } else { this.url = (constant['base_url']).substring(0, (constant['base_url']).length - 7) + this.url }
+    if (this.url.indexOf('http') >= 0  || this.url.indexOf('google.n')>=0) {
+      if(this.url.indexOf('google.n')>=0){
+        this.url = 'http://maps.google.com/?q='+this.url.split('=')[1]+'&output=embed'
+      }
+     } else { this.url = (constant['base_url']).substring(0, (constant['base_url']).length - 7) + this.url }
     if (this.url.indexOf('?') >= 0) { } else { this.url = this.url + '?' }
     this.url = this.parameterhelper(route, this.url)
+    console.log(this.url)
     this.safeurl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
   togglesuccess() {

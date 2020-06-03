@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NavigatorstackService } from 'src/app/navigatorstack.service';
 import { UtilfuncService } from '../utilfunc.service';
 import { feedview } from 'src/app/configjson/feedview';
+import { cards_action } from 'src/app/configjson/card_action';
 
 @Component({
   selector: 'app-template-transaction',
@@ -43,6 +44,8 @@ export class TemplateTransactionComponent implements OnInit {
           "user_parameters": segue['user_parameters'],
           "generic_view_id": segue['generic_view_id'],
           "view_identifier": segue['view_identifier'],
+        "filter_entity":segue['filter_entity']|| [ ],
+
           "card_data": this.data,
           "url": endpoint
         }

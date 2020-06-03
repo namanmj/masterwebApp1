@@ -7,8 +7,8 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebIntent } from '@ionic-native/web-intent/ngx';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { Downloader } from '@ionic-native/downloader/ngx';
+
+
 
 
 
@@ -49,6 +49,7 @@ import { MyInterceptor } from './httpinspector';
 import { PaymentComponent } from './payment/payment.component';
 import { CardDetailPageComponent } from './card-detail-page/card-detail-page.component';
 import { TemplateSectionItemHistoryComponent } from './shared/template-section-item-history/template-section-item-history.component';
+import { TemplateExpandableHeaderComponent } from './shared/template-expandable-header/template-expandable-header.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -70,6 +71,7 @@ import { TemplateSectionItemHistoryComponent } from './shared/template-section-i
     TemplateCommonCardContentComponent,
     TemplateVerticalImageTextComponent,
     TemplateSectionItemHistoryComponent,
+    TemplateExpandableHeaderComponent,
     TemplateTransactionComponent],
   entryComponents: [],
   imports: [
@@ -92,8 +94,6 @@ import { TemplateSectionItemHistoryComponent } from './shared/template-section-i
   providers: [
     StatusBar,
     SplashScreen,
-    SocialSharing,
-    Downloader,
     WebIntent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

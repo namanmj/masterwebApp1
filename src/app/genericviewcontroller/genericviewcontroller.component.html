@@ -2,8 +2,7 @@
   <div class="container px-0 mx-0">
     <div class="row px-0 mx-0">
       <div class="col px-0 mx-0" style="min-height: 100vh;max-height: 100vh;overflow-y: scroll;">
-        <div class="input-group nav  py-1r px-1r background-themecolor" style="position:sticky;top:0px;z-index: 10000;"
-          [class.pt-5]="http['iOS']">
+        <div class="input-group nav  py-1r px-1r background-themecolor" style="position:sticky;top:0px;z-index: 10000;" [class.pt-5]="http['iOS']">
           <i class="fa fa-arrow-left" style=" color: white;width: 10% !important;margin-top: 4px;cursor: pointer;" aria-hidden="true"
             (click)="back()"></i>
           <h4 class="f-18px text-white pb-0 m-0 text-center" style="width:80% !important;white-space: nowrap;
@@ -14,106 +13,108 @@
         <div class="body f-15px" style="padding-bottom:50px;max-width:100vw !important;overflow:scroll">
           <div [formGroup]="formGroup" style="margin: 20px">
             <div *ngFor="let question of formdata.questions;let i=index">
-              <div  *ngIf=" question.type==='RADIO' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='RADIO'">
+              <div *ngIf=" question.type==='RADIO' && dependencyResolver(question)">
+                <span *ngIf="question.type==='RADIO'">
                   <mat-label>{{question.title}}</mat-label>
-                  <mat-radio-group class="example-radio-group" [formControlName]="question.attribute_name">
+                  <mat-radio-group class="example-radio-group" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name">
                     <span *ngIf="question.possible_values">
-                      <mat-radio-button class="example-radio-button" *ngFor="let option of question.options"
-                        [value]="option[question.attribute_rhs]">{{option[question.possible_values[0]]}}
+                      <mat-radio-button class="example-radio-button" *ngFor="let option of question.options" [value]="option[question.attribute_rhs]">{{option[question.possible_values[0]]}}
                       </mat-radio-button>
                     </span>
-                    <mat-radio-button #radiooptions class="example-radio-button" *ngFor="let option of question.options"
-                      [value]="option[question.attribute_rhs]">{{option['title']}}</mat-radio-button>
+                    <mat-radio-button #radiooptions class="example-radio-button" *ngFor="let option of question.options" [value]="option[question.attribute_rhs]">{{option['title']}}</mat-radio-button>
                   </mat-radio-group>
                 </span>
               </div>
-              <div  *ngIf=" question.type==='NUMBER' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='NUMBER'">
+              <div *ngIf=" question.type==='NUMBER' && dependencyResolver(question)">
+                <span *ngIf="question.type==='NUMBER'">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline">
-                    <input matInput type="number" [placeholder]="question.placeholder_text"
-                      [formControlName]="question.attribute_name">
+                    <input matInput type="number" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name">
+                    <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
-                </span></div>
-              <div  *ngIf=" question.type==='TEXT' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='TEXT'">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='TEXT' && dependencyResolver(question)">
+                <span *ngIf="question.type==='TEXT'">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline">
-                    <input matInput type="text" [placeholder]="question.placeholder_text"
-                      [formControlName]="question.attribute_name">
+                    <input matInput type="text" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name">
+                    <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
-                </span></div>
-              <div  *ngIf=" question.type==='TEXTVIEW' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='TEXTVIEW'">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='TEXTVIEW' && dependencyResolver(question)">
+                <span *ngIf="question.type==='TEXTVIEW'">
                   <mat-label>{{question.title}}</mat-label>
-                  <mat-form-field class="example-radio-group" appearance="outline"
-                    style="margin-top: 5px !important;">
-                    <textarea matInput type="text" style="height:100%" [placeholder]="question.placeholder_text"
-                      [formControlName]="question.attribute_name"></textarea>
+                  <mat-form-field class="example-radio-group" appearance="outline" style="margin-top: 5px !important;">
+                    <textarea matInput type="text" style="height:100%" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name"></textarea>
+                    <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
-                </span></div>
-              <div  *ngIf=" question.type==='CONCATENATEDYNAMICTAGS' && (question.max_items==='1' || !question.max_items) && dependencyResolver(question)">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='CONCATENATEDYNAMICTAGS' && (question.max_items==='1' || !question.max_items) && dependencyResolver(question)">
                 <span *ngIf="question.type==='CONCATENATEDYNAMICTAGS'&& (question.max_items==='1' || !question.max_items) &&
                 dependencyResolver(question)">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline">
-                    <mat-select [formControlName]="question.attribute_name" [placeholder]="question.placeholder_text">
+                    <mat-select [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name" [placeholder]="question.placeholder_text">
                       <mat-option *ngFor="let option of question.options" [value]="option[question.attribute_rhs]">
                         {{option[question.possible_values[0]]}}</mat-option>
                     </mat-select>
+                    <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
-                </span></div>
-              <div  *ngIf=" question.type==='CONCATENATEDYNAMICTAGS'&& question.max_items &&(question.max_items==='many' || question.max_items!='1') &&
+                </span>
+              </div>
+              <div *ngIf=" question.type==='CONCATENATEDYNAMICTAGS'&& question.max_items &&(question.max_items==='many' || question.max_items!='1') &&
                 dependencyResolver(question)">
                 <span *ngIf="question.type==='CONCATENATEDYNAMICTAGS'&&(question.max_items==='many' || question.max_items!='1')">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline">
-                    <mat-select [formControlName]="question.attribute_name" multiple
-                      [placeholder]="question.placeholder_text">
+                    <mat-select [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name" multiple [placeholder]="question.placeholder_text">
                       <mat-option *ngFor="let option of question.options" [value]="option[question.attribute_rhs]">
                         {{option[question.possible_values[0]]}}</mat-option>
                     </mat-select>
+                    <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
-                </span></div>
-              <div  *ngIf=" question.type==='DATE' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='DATE'">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='DATE' && dependencyResolver(question)">
+                <span *ngIf="question.type==='DATE'">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline">
-                    <input [placeholder]="question.placeholder_text" [formControlName]="question.attribute_name" matInput [matDatepicker]="i">
+                    <input [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name" matInput [matDatepicker]="i">
                     <mat-datepicker-toggle matSuffix [for]="i"></mat-datepicker-toggle>
                     <mat-datepicker #i></mat-datepicker>
+                    <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
-                </span></div>
-                <div  *ngIf=" question.type==='IMAGE_CAMERA' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='IMAGE_CAMERA'">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='IMAGE_CAMERA' && dependencyResolver(question)">
+                <span *ngIf="question.type==='IMAGE_CAMERA'">
                   <mat-label>{{question.title}}</mat-label>
-                  <button style="    box-shadow: none;padding: 4px;margin-top: 5px;border: none;position:static;"
-                    class="button_file" type="button" mat-raised-button
-                    (click)="imageInput.click()">{{fileName||'Choose File'}}</button>
-                  <input hidden (change)="onFileChange($event,question.attribute_name)" #imageInput type="file"
-                    id="fileimage" accept="image/*">
+                  <button style="    box-shadow: none;padding: 4px;margin-top: 5px;border: none;position:static;" class="button_file" type="button"
+                    mat-raised-button (click)="imageInput.click()">{{fileName||'Choose File'}}</button>
+                  <input hidden (change)="onFileChange($event,question.attribute_name)" #imageInput type="file" id="fileimage" accept="image/*">
                   <!-- <input type="file" > -->
-                </span></div>
-                <div  *ngIf=" question.type==='IMAGE' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='IMAGE'">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='IMAGE' && dependencyResolver(question)">
+                <span *ngIf="question.type==='IMAGE'">
                   <mat-label>{{question.title}}</mat-label>
-                  <button style="    box-shadow: none;padding: 4px;margin-top: 5px;border: none;position:static;"
-                    class="button_file" type="button" mat-raised-button
-                    (click)="imageInput.click()">{{fileName||'Choose File'}}</button>
-                  <input hidden (change)="onFileChange($event,question.attribute_name)" #imageInput type="file"
-                    id="fileimage" accept="image/*">
+                  <button style="    box-shadow: none;padding: 4px;margin-top: 5px;border: none;position:static;" class="button_file" type="button"
+                    mat-raised-button (click)="imageInput.click()">{{fileName||'Choose File'}}</button>
+                  <input hidden (change)="onFileChange($event,question.attribute_name)" #imageInput type="file" id="fileimage" accept="image/*">
                   <!-- <input type="file" > -->
-                </span></div>
-              <div  *ngIf=" question.type==='FILE' && dependencyResolver(question)"> <span
-                  *ngIf="question.type==='FILE'">
+                </span>
+              </div>
+              <div *ngIf=" question.type==='FILE' && dependencyResolver(question)">
+                <span *ngIf="question.type==='FILE'">
                   <mat-label>{{question.title}}</mat-label>
-                  <button style="    box-shadow: none;padding: 4px;margin-top: 5px;border: none;position:static;"
-                    class="button_file" type="button" mat-raised-button
-                    (click)="fileInput.click()">{{fileName||'Choose File'}}</button>
-                  <input hidden (change)="onFileChange($event,question.attribute_name)" #fileInput type="file" id="file"
-                    accept="text/plain, application/*">
-                </span></div>
+                  <button style="    box-shadow: none;padding: 4px;margin-top: 5px;border: none;position:static;" class="button_file" type="button"
+                    mat-raised-button (click)="fileInput.click()">{{fileName||'Choose File'}}</button>
+                  <input hidden (change)="onFileChange($event,question.attribute_name)" #fileInput type="file" id="file" accept="text/plain, application/*">
+                </span>
+              </div>
             </div>
 
           </div>

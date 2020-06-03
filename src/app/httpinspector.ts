@@ -24,9 +24,14 @@ export class MyInterceptor implements HttpInterceptor {
     {
       headers: request.headers.set("Authorization", "bearer " + localStorage.getItem('webapptoken'))
     }
-    const updatedRequest = request.clone({
-      headers: request.headers.set("Authorization", "bearer " + localStorage.getItem('webapptoken'))
-    });
+    var updatedRequest
+    if(localStorage.getItem('webapptoken')){
+       updatedRequest = request.clone({
+        headers: request.headers.set("Authorization", "bearer " + localStorage.getItem('webapptoken'))
+      });
+    }else{
+       updatedRequest = request.clone({});
+    }
     //logging the updated Parameters to browser's console
     return next.handle(updatedRequest).pipe(
       tap(

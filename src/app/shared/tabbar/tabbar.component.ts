@@ -37,6 +37,7 @@ export class TabbarComponent implements OnInit {
           "route": '/feedview',
           "card_parameters": data['card_parameters'],
           "user_parameters": data['user_parameters'],
+          "filter_entity": data['filter_entity'],
           "constants": data['constants'],
           "view_identifier": "FeedViewController",
           "card_data": data
@@ -50,6 +51,8 @@ export class TabbarComponent implements OnInit {
           "user_parameters": feedview[data['generic_view_id']]['user_parameters'] || data['user_parameters'],
           "constants": feedview[data['generic_view_id']]['constants'],
           "view_identifier": "FeedViewController",
+          "filter_entity": data['filter_entity'],
+
           "generic_view_id":data['generic_view_id'],
           "card_data": data
         })

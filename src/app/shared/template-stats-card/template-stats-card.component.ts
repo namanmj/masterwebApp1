@@ -53,6 +53,8 @@ export class TemplateStatsCardComponent implements OnInit {
             "user_parameters": segue['user_parameters'],
             "generic_view_id": segue['generic_view_id'],
             "view_identifier": segue['view_identifier'],
+        "filter_entity":segue['filter_entity']|| [ ],
+
             "card_data": this.data,
             "url": endpoint
           }

@@ -5,6 +5,7 @@ import { NavigatorstackService } from 'src/app/navigatorstack.service';
 import { UtilfuncService } from '../utilfunc.service';
 import { cards_mapping } from 'src/app/configjson/cards_mapping';
 import { constant } from 'src/app/configjson/constant';
+import { cards_action } from 'src/app/configjson/card_action';
 
 @Component({
   selector: 'app-template-common-card-content',
@@ -18,7 +19,7 @@ export class TemplateCommonCardContentComponent implements OnInit  {
   data
   constructor(private router: Router, private navigatorstack: NavigatorstackService, public util: UtilfuncService) { }
   action() {
-    if(!this.data['card_action_entity']){
+    if(!this.data['card_action_entity']  || !cards_action[this.data['card_action_entitiy']]){
     if (this.cards_mapping[this.data['entity']]['segue']) {
       var segue = this.cards_mapping[this.data['entity']]['segue']
       var route = ''
@@ -40,6 +41,8 @@ export class TemplateCommonCardContentComponent implements OnInit  {
           "route": route,
           "constants": segue['constants'],
           "card_parameters": segue['card_parameters'],
+        "filter_entity":segue['filter_entity']|| [ ],
+
           "user_parameters": segue['user_parameters'],
           "generic_view_id": segue['generic_view_id'],
           "view_identifier": segue['view_identifier'],

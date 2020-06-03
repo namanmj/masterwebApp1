@@ -12,13 +12,13 @@
                         Sign-in
                     </h4>
                     <p class="subtitle">
-                        Enter your SAP Code Here
+                        Enter your {{usernameString}} Here
                     </p>
                     <br>
                     <div class="container px-0 mx-0">
                         <div class="row form  px-0 mx-0">
                             <div class="col-12 mx-0 px-0">
-                                <input placeholder="Enter your SAP Code Here" class="form form-control mobileinput"
+                                <input [placeholder]="'Enter your '+usernameString+' Here'" class="form form-control mobileinput"
                                     [(ngModel)]="username" #name="ngModel" required>
                                 <div *ngIf="name.invalid && (name.dirty || name.touched)"
                                     class="alert alert-danger mt-3">
@@ -167,7 +167,7 @@
                         <div class="row form  px-0 mx-0">
                             <div class="col-12 mx-0 px-0">
                                 <div>
-                                    <input placeholder="Enter your SAP Code Here" class="form form-control mobileinput" [(ngModel)]="username" #name="ngModel" required>
+                                    <input [placeholder]="'Enter your '+usernameString+' Here'" class="form form-control mobileinput" [(ngModel)]="username" #name="ngModel" required>
                                 </div>
                                 <br>
                                 <div>
@@ -190,3 +190,10 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+
+

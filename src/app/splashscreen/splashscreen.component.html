@@ -3,7 +3,7 @@
         <div class="row mx-0 px-0">
             <div class="col mx-0 px-0">
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2000">
-                    <div class="carousel-inner" style="height:80vh">
+                    <div class="carousel-inner" style="height:80vh"  *ngIf="http.isJayceeconnect">
                         <div class="carousel-item active" style="height:100%">
                             <div class="container mx-0 px-0" style="height:100%">
                                 <div class="row mx-0 px-0" style="height:100%">
@@ -20,7 +20,7 @@
                                         <p class="text-white text-center px-5">
                                             <strong class="title1">Jaycee Connect</strong>
                                             <br>
-                                            <br> Powered by <a style="color:white" href="https://simplifii.com/">Simplifii Labs</a>
+                                            <br> Powered by Simplifii Labs
                                         </p>
                                     </div>
                                 </div>
@@ -54,9 +54,32 @@
                         </div>
 
                     </div>
+                    <div class="carousel-inner" style="height:80vh"  *ngIf="!http.isJayceeconnect">
+  
+                        <div class="carousel-item active" style="height:100%">
+                            <div class="container mx-0 px-0" style="height:100%">
+                                <div class="row mx-0 px-0" style="height:100%">
+                                    <div class="col mx-0 px-0 text-center title2" >
+                                        <div class="content-img content-img-2">
+                                            <img class="banner-img-2" src="assets/simplifiiLogo.png" style="    width: 200px;    padding-top: 4rem;" alt="">
+                                        </div>
+                                        <p class="text-white text-center px-5">
+                                            <strong class="title1">
+                                                Simplifii
+  
+                                            </strong>
+                                            <br>
+                                            <br>Simplifii is a Versatile Business Apps Platform that enables companies scale and innovate faster
+                                        </p>
+  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+  
+                    </div>
                     <ol class="carousel-indicators" style="top:90vh">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                     </ol>
                 </div>
                 <div class="content text-center" style="height:10vh">
@@ -71,3 +94,7 @@
         </div>
     </div>
 </section>
+
+
+
+

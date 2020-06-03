@@ -1,0 +1,14 @@
+<div (click)="toggleIcon('expandable-'+data['id'])">
+  <div class="text-center" style="display: inline-block;width: 10%;padding-right: 13px;">
+    <img [src]="util.geticons(data[cards_mapping[data['entity']]['fields_mapping']['content']['iv_left_icon']['key']]  || cards_mapping[data['entity']]['fields_mapping']['content']['iv_left_icon']['key']) || util.geticons(cards_mapping[data['entity']]['fields_mapping']['content']['iv_left_icon']['key'])" style="width:20px" alt="" srcset="">
+  </div>
+  <div style="display:inline-block;width:80%">
+    <h2 class="mb-0" style="font-size: 16px;padding-top: 5px;padding-bottom: 5px;color:black;text-decoration: none;"
+    [innerHTML]="data[cards_mapping[data['entity']]['fields_mapping']['content']['tv_header_title']['key']] || cards_mapping[data['entity']]['fields_mapping']['content']['tv_header_title']['default_value'] || ' '">
+    </h2>
+  </div>
+  <div class="text-center" [id]="'expandable-'+data['id']" style="display: inline-block;width: 10%;padding-right: 13px;transform: scaleY(-1);">
+    <img src="assets/img/up_arrow_grey.png" style="width:20px" alt=""
+       srcset="">
+  </div>
+</div>

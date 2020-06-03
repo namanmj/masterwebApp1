@@ -14,6 +14,7 @@ import { NavigatorstackService } from './navigatorstack.service';
 import { HttpService } from './http.service';
 import { Router } from '@angular/router';
 import { DetailPage } from './configjson/detailPage';
+import { Filter } from './configjson/filter';
 const { SplashScreen } = Plugins;
 const { App } = Plugins;
 @Component({
@@ -32,6 +33,11 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
   ngOnInit() {
+    if(window.location.hostname.includes('jayceeconnect')){
+      this.http.isJayceeconnect=true
+    }else{ 
+      this.http.isJayceeconnect=false
+    }
     var device = window.navigator.userAgent
     if (device.includes('IOS') || device.includes('Iphone') || device.includes('IPHONE') || device.includes('iPhone')) {
       this.http['iOS'] = true
@@ -70,6 +76,7 @@ export class AppComponent implements OnInit {
     });
     try {
       Tabbar.setup(JSON.parse(localStorage.getItem('tabbar')))
+      Filter.setup(JSON.parse(localStorage.getItem('filter')))
       FeedView.setup(JSON.parse(localStorage.getItem('feedview')))
       CardMapping.setup(JSON.parse(localStorage.getItem('cardmapping')))
       Constants.setup(JSON.parse(localStorage.getItem('constants')))

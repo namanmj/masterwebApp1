@@ -310,3 +310,10 @@ input{
 .mat-form-field-infix{
   border-top:0px !important;
 }
+
+
+#mylambdabot-launcher-container.mylambdabot-avatar-launcher, #mylambdabot-launcher-container.mylambdabot-launcher-notext {
+  /* bottom: 15px; */
+  top: 15px !important;
+  bottom: unset !important;
+}

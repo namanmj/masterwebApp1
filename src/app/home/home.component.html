@@ -13,19 +13,19 @@
                     <div *ngFor="let item of data">
                         <div *ngIf="cards_mapping[item['entity']]">
                             <app-template-stats-card (click)="action(item)"
-                                *ngIf="cards_mapping[item['entity']]['template']=='templateStatsCard'" [data]='item'>
+                                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateStatsCard'" [data]='item'>
                             </app-template-stats-card>
                             <app-template-grid2-by2 (click)="action(item)"
-                                *ngIf="cards_mapping[item['entity']]['template']=='templateGrid2By2'" [data]='item'>
+                                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateGrid2By2'" [data]='item'>
                             </app-template-grid2-by2>
                             <app-template-two (click)="action(item)"
-                                *ngIf="cards_mapping[item['entity']]['template']=='templateTwo'" [data]='item'>
+                                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateTwo'" [data]='item'>
                             </app-template-two>
                             <app-template-common-card-content (click)="action(item)" [data]='item'
-                                *ngIf="cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
+                                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateCommonCardContent'">
                             </app-template-common-card-content>
                             <app-template-vertical-image-text (click)="action(item)" [data]='item'
-                                *ngIf="cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
+                                *ngIf="cards_mapping[item['entity']]&&cards_mapping[item['entity']]['template']=='templateVerticalImageText'">
                             </app-template-vertical-image-text>
                         </div>
                     </div>

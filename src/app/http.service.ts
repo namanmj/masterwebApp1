@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class HttpService {
  
   baseurl = localStorage.getItem('baseurl_to_login') || ' '
+  isJayceeconnect: boolean;
 
  constructor(public http: HttpClient, private router: Router) { }
  logout(data) {
@@ -41,8 +42,7 @@ export class HttpService {
  }
 
  generatOtp(username) {
-   return this.http.patch('https://auth2.simplifii.com/users/authenticate', { "username": username ,
-	"reset_password_base_url":"https://auth2.simplifii.com"})
+   return this.http.patch('https://auth2.simplifii.com/users/authenticate', { "username": username})
  }
  get_otp(username) {
   return this.http.post(`${this.baseurl}/get_otp`, { "mobile": username })

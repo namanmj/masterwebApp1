@@ -122,10 +122,8 @@ export class HomeComponent implements OnInit {
     }
   }
   action(data) {
-    console.log(data)
     if (detailPage[data['entity']]) {
       this.localdata=data
-      console.log('Detail Page found')
       this.actioncontroler({...data,'view_identifier':"CardDetailViewController"},data)
       return 
     }
@@ -146,7 +144,6 @@ export class HomeComponent implements OnInit {
   }
   actioncontroler(data, x) {
     var segue = data
-    
     var route = ''
     var endpoint = ''
     if (segue['view_identifier'] == 'WebViewController') {
@@ -191,6 +188,7 @@ export class HomeComponent implements OnInit {
         "user_parameters": segue['user_parameters'],
         "generic_view_id": segue['generic_view_id'],
         "view_identifier": segue['view_identifier'],
+        "filter_entity":segue['filter_entity']|| [ ],
         "card_data": this.localdata,
         "url": endpoint, 
         "params":(x['params']&&x['params']['data'])?[...x['params']['data']]:[],
@@ -201,8 +199,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.errorstatus = false
     this.user = JSON.parse(localStorage.getItem('user'))
-    
-    if (localStorage.getItem('constants')) { } else { this.router.navigateByUrl('/login') }
+    if (localStorage.getItem('constants')) { } else { this.router.navigateByUrl('/splash') }
     this.loading = true
     this.http.getapi(constant['base_url'] + this.util.getvalue(constant, 'api.cards.get')).subscribe((value) => {
       this.data = this.util.getvalue(value, 'response.data')
