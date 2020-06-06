@@ -10,7 +10,7 @@ import { UtilfuncService } from '../shared/utilfunc.service';
 import { detailPage } from '../configjson/detailPage';
 import { filter } from '../configjson/filter';
 import { HttpClient } from '@angular/common/http';
-import { saveAs } from 'file-saver/dist/Filesaver';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-feedview',
   templateUrl: './feedview.component.html',
