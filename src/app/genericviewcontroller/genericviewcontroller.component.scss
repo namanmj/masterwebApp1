@@ -49,3 +49,8 @@ mat-label , mat-form-field{
   select , input, textarea{
     padding-left: 5px !important;
   }
+  canvas.drawing, canvas.drawingBuffer {
+    position: absolute;
+    left: 0;
+    top: 0;
+}

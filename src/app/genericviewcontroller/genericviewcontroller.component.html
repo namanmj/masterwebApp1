@@ -47,7 +47,7 @@
                 <span *ngIf="question.type==='TEXTVIEW'">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline" style="margin-top: 5px !important;">
-                    <textarea matInput type="text" style="height:100%" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name"></textarea>
+                    <textarea matInput type="text" style="height:100%"  [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name"></textarea>
                     <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
                 </span>
@@ -119,6 +119,11 @@
 
           </div>
         </div>
+        <div>
+        <button (click)="scan()">Start/Stop the Scanner</button>
+        </div>
+        <input type="button" id="btn" value="Start/Stop the scanner" />
+        <div id="scanner-container"></div>
         <div class="submitBtn f-13px" style="width: 100%;background-color: white;">
           <button (click)="submit()">{{formdata['submit_button_text'] || 'Submit'}}</button>
         </div>

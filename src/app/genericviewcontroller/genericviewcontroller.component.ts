@@ -5,15 +5,21 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../http.service';
 import { UtilfuncService } from '../shared/utilfunc.service';
-
+import * as Quagga  from 'quagga';
+//var Quagga = require('quagga').default;
+/*import QrScanner from "node_modules/qr-scanner/qr-scanner.min.js";
+QrScanner.WORKER_PATH = '../qr-scanner-worker.min.js';*/
 @Component({
   selector: 'app-genericviewcontroller',
   templateUrl: './genericviewcontroller.component.html',
   styleUrls: ['./genericviewcontroller.component.scss'],
 })
 export class GenericviewcontrollerComponent implements OnInit {
+  Quagga:any;
   masterJson = masterJson;
   data;
+  x;
+  y;
   formdata: any;
   formGroup: FormGroup;
   userData: any;
@@ -28,7 +34,7 @@ export class GenericviewcontrollerComponent implements OnInit {
   lat = ' ';
   lng = ' ';
   cardData;
-
+  _scannerIsRunning: any = false;
 
 
   constructor(private util: UtilfuncService, private navigatorstack: NavigatorstackService, private router: Router, private fb: FormBuilder, public http: HttpService) {
@@ -55,6 +61,119 @@ export class GenericviewcontrollerComponent implements OnInit {
       return true;
     }
   }
+  scan(){
+     /*this.x = document.createElement("VIDEO");
+    document.getElementById("vdiv").appendChild(this.x);
+    var scanner = new QrScanner(this.x, result =>console.log(result));
+    scanner.start();*/
+    /*this.y=document.createElement("IMG");
+    this.y.src="https://miro.medium.com/max/1424/1*sHmqYIYMV_C3TUhucHrT4w.png"
+    QrScanner.scanImage(this.y)
+    .then(result => console.log(result))
+    .catch(e => console.log(e));*/
+   
+      if (this._scannerIsRunning) {
+          Quagga.stop();
+          this._scannerIsRunning= false;
+          console.log("stop sacnner")
+      } else {
+          this.startScanner();
+          console.log("start sacnner")
+      }
+  }
+  
+   startScanner() {
+    /*Quagga.init({
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            target: document.querySelector('#scanner-container'),
+            constraints: {
+                width: 480,
+                height: 320,
+                facingMode: "environment"
+            },
+        },
+        decoder: {
+            readers: [
+                "code_128_reader",
+                "ean_reader",
+                "ean_8_reader",
+                "code_39_reader",
+                "code_39_vin_reader",
+                "codabar_reader",
+                "upc_reader",
+                "upc_e_reader",
+                "i2of5_reader"
+            ],
+            debug: {
+                showCanvas: true,
+                showPatches: true,
+                showFoundPatches: true,
+                showSkeleton: true,
+                showLabels: true,
+                showPatchLabels: true,
+                showRemainingPatchLabels: true,
+                boxFromPatches: {
+                    showTransformed: true,
+                    showTransformedBox: true,
+                    showBB: true
+                }
+            }
+        },
+
+    }, function (err) {
+        if (err) {
+            console.log(err);
+            return
+        }
+
+        console.log("Initialization finished. Ready to start");*/
+        this._scannerIsRunning = true;
+        Quagga.start();
+
+        // Set flag to is running
+       
+      //});
+
+    Quagga.onProcessed(result=> {
+      console.log(result)
+    
+        var drawingCtx = Quagga.canvas.ctx.overlay,
+        drawingCanvas = Quagga.canvas.dom.overlay;
+
+        if (result) {
+          
+            if (result.boxes) {
+                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
+                result.boxes.filter(function (box) {
+                    return box !== result.box;
+                }).forEach(function (box) {
+                    Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: "green", lineWidth: 2 });
+                });
+            }
+
+            if (result.box) {
+                Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: "#00F", lineWidth: 2 });
+            }
+
+            if (result.codeResult && result.codeResult.code) {
+                Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
+            }
+        }
+    });
+
+
+    Quagga.onDetected(function (result) {
+      console.log("hello guys")
+        console.log("Barcode detected and processed : [" + result.codeResult.code + "]", result);
+        alert("Barcode detected and processed : [" + result.codeResult.code + "]"+result)
+    });
+}
+    
+
+
+
 
   returnDefaultvalue(question) {
     if (question.field_value_type) {
@@ -70,10 +189,59 @@ export class GenericviewcontrollerComponent implements OnInit {
   }
 
   ngOnInit() {
+   
+    Quagga.init({
+      inputStream: {
+          name: "Live",
+          type: "LiveStream",
+          target: document.querySelector('#scanner-container'),
+          constraints: {
+              width: 480,
+              height: 320,
+              facingMode: "environment"
+          },
+      },
+      decoder: {
+          readers: [
+              "code_128_reader",
+              "ean_reader",
+              "ean_8_reader",
+              "code_39_reader",
+              "code_39_vin_reader",
+              "codabar_reader",
+              "upc_reader",
+              "upc_e_reader",
+              "i2of5_reader"
+          ],
+          debug: {
+              showCanvas: true,
+              showPatches: true,
+              showFoundPatches: true,
+              showSkeleton: true,
+              showLabels: true,
+              showPatchLabels: true,
+              showRemainingPatchLabels: true,
+              boxFromPatches: {
+                  showTransformed: true,
+                  showTransformedBox: true,
+                  showBB: true
+              }
+          }
+      },
+
+  }, function (err) {
+      if (err) {
+          console.log(err);
+          return
+      }
+alert("initialization finished now u can start the scanner")
+      console.log("Initialization finished. Ready to start");
+    });
+    
     console.log(this.userData);
     this.formGroup = this.fb.group({});
     this.masterJson = masterJson;
-
+    
     this.data = this.navigatorstack.returntop();
     console.log(this.data.card_data);
     this.cardData = this.data.card_data;
@@ -82,6 +250,7 @@ export class GenericviewcontrollerComponent implements OnInit {
     if (this.masterJson[generic_view_id]) { } else { this.router.navigateByUrl('/home'); }
     this.formdata = this.masterJson[generic_view_id] || '';
     console.log(this.formdata['card_parameters'])
+   
     if (!this.formdata['card_parameters']) {
       console.log(this.data['card_parameters'])
       if (this.data['card_parameters']) {
@@ -96,6 +265,7 @@ export class GenericviewcontrollerComponent implements OnInit {
     }
     if (this.formdata.pages) {
       var sectionquestion = []
+      
       this.formdata.pages.forEach(page => {
         page.sections.forEach(section => {
           section.questions.forEach(question => { sectionquestion.push(question) })
@@ -105,6 +275,7 @@ export class GenericviewcontrollerComponent implements OnInit {
     }
     if (this.formdata) {
       this.formdata.questions.forEach(element => {
+        
         if (element['type'] == "HIDDEN_LOCATION") {
           try {
             if (window.navigator['permissions']) {
