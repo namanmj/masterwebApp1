@@ -38,7 +38,7 @@
                 <span *ngIf="question.type==='TEXT'">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline">
-                    <input matInput type="text" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name">
+                    <input matInput type="text" value="" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name">
                     <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
                 </span>
@@ -47,7 +47,7 @@
                 <span *ngIf="question.type==='TEXTVIEW'">
                   <mat-label>{{question.title}}</mat-label>
                   <mat-form-field class="example-radio-group" appearance="outline" style="margin-top: 5px !important;">
-                    <textarea matInput type="text" style="height:100%"  [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name"></textarea>
+                    <textarea matInput type="text" style="height:100%" value="" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name"></textarea>
                     <mat-error>{{question.title}} is required</mat-error>
                   </mat-form-field>
                 </span>
@@ -115,15 +115,36 @@
                   <input hidden (change)="onFileChange($event,question.attribute_name)" #fileInput type="file" id="file" accept="text/plain, application/*">
                 </span>
               </div>
+              <div *ngIf=" question.type==='QR_CODE' ">
+                <span *ngIf="question.type==='QR_CODE'">
+                  <mat-label>{{question.title}}</mat-label>
+                  <mat-form-field class="example-radio-group" appearance="outline" style="margin-top: 5px !important;">
+                    <textarea  matInput id="naman1" type="text" style="height:100%" [placeholder]="question.placeholder_text" [disabled]="question.is_editable===false"  [formControlName]="question.attribute_name"></textarea>
+                    <mat-error>{{question.title}} is required</mat-error>
+                  </mat-form-field>
+                </span>
+                <button (click)="naman()">Start/Stop Scanner</button>
+                <zxing-scanner *ngIf="this.cond" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+
+              </div>
             </div>
 
           </div>
         </div>
-        <div>
+        <!--<div>
         <button (click)="scan()">Start/Stop the Scanner</button>
         </div>
         <input type="button" id="btn" value="Start/Stop the scanner" />
-        <div id="scanner-container"></div>
+        <div id="scanner-container"></div>-->
+       <!-- <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+
+<section class="results" *ngIf="qrResultString">
+  <div>
+    <small>Result</small>
+    <strong>{{ qrResultString }}</strong>
+  </div>
+  <button mat-icon-button (click)="clearResult()">&times;</button>
+</section>-->
         <div class="submitBtn f-13px" style="width: 100%;background-color: white;">
           <button (click)="submit()">{{formdata['submit_button_text'] || 'Submit'}}</button>
         </div>

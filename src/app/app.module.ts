@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouteReuseStrategy } from '@angular/router';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -75,6 +76,7 @@ import { TemplateExpandableHeaderComponent } from './shared/template-expandable-
     TemplateTransactionComponent],
   entryComponents: [],
   imports: [
+    ZXingScannerModule,
     MatNativeDateModule,
     MatButtonModule,
     BrowserModule,
